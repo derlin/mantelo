@@ -1,0 +1,9 @@
+.artifacts
+build
+dist
+keycloak/version.py
+*.egg-info
+.eggs
+*.pyc
+*.pyo
+.tox

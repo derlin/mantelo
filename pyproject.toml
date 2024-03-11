@@ -1,0 +1,102 @@
+[build-system]
+requires = [
+  "setuptools>=61.0",
+  "setuptools-scm[toml]>=6.2",
+  "wheel",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+dynamic = ["version"] # see setuptools_scm
+name = "keycloak-admin"
+description = "A full keycloak admin client"
+license = { file = "LICENSE.txt" }
+authors = [{ name = "Lucy Linder", email = "lucy.derlin@gmail.com" }]
+readme = "README.md"
+
+classifiers = [
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Software Development",
+]
+
+requires-python = ">=3.10"
+
+dependencies = [
+  "attrs",
+  "pyjwt",
+  "requests",
+  "slumber",
+]
+
+[project.optional-dependencies]
+dev = [
+  "coverage",
+  "tox",
+  "build",
+]
+
+test = [
+  "mock",
+  "pytest",
+  "requests-mock",
+  "pytest-cov",
+]
+
+
+[tool.setuptools]
+include-package-data = false
+zip-safe = false
+platforms = ["any"]
+
+[tool.setuptools.packages.find]
+# empty to let setuptools do its magic
+
+
+[tool.check-manifest]
+ignore = [
+  "tox.ini",
+  "Makefile",
+  "keycloak/version.py",
+]
+
+
+[tool.setuptools_scm]
+write_to = "keycloak/version.py"
+
+[tool.ruff]
+extend = "/presets/ruff.toml"
+target-version = "py310"      # lowest supported version
+
+
+[tool.coverage.report]
+# Regexes for lines to exclude from consideration
+exclude_lines = [
+  # Have to re-enable the standard pragma
+  "pragma: no cover",
+  "NOCOV",
+  # Don't complain if non-runnable code isn't run:
+  "if __name__ == .__main__.:",
+  "raise AssertionError",
+  "raise NotImplementedError",
+]
+precision = 2
+
+[tool.coverage.html]
+directory = ".artifacts/htmlcov"
+
+[tool.coverage.xml]
+output = ".artifacts/coverage.xml"
+
+[tool.coverage.run]
+branch = true
+relative_files = true
+source = ["."]
+data_file = ".artifacts/.coverage"
+omit = ["keycloak/version.py"]
+
+[tool.pytest.ini_options]
+markers = ["integration"]

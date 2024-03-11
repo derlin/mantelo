@@ -1,0 +1,30 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev --import-realm
+    ports:
+      - 9090:8080
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: true
+    volumes:
+      - ./tests/realms:/opt/keycloak/data/import
+    healthcheck:
+      test: ['CMD-SHELL', '[ -f /tmp/HealthCheck.java ] || echo "public class HealthCheck { public static void main(String[] args) throws java.lang.Throwable { System.exit(java.net.HttpURLConnection.HTTP_OK == ((java.net.HttpURLConnection)new java.net.URL(args[0]).openConnection()).getResponseCode() ? 0 : 1); } }" > /tmp/HealthCheck.java && java /tmp/HealthCheck.java http://localhost:8080/health/live']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  tox:
+    image: divio/multi-python:latest
+    profiles: [test]
+    command: tox
+    environment:
+      TEST_SERVER_URL: http://keycloak:8080
+    volumes:
+      - .:/app
+    depends_on:
+      - keycloak
+    links:
+      - keycloak
