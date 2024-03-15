@@ -1,7 +1,7 @@
 .PHONY: lint test setup_build build
 
 lint:
-	docker run --rm -it -e LINT_FOLDER_PYTHON=keycloak -v $(CURDIR):/app divio/lint /bin/lint ${ARGS} --run=python
+	docker run --rm -e LINT_FOLDER_PYTHON=keycloak -v $(CURDIR):/app divio/lint /bin/lint ${ARGS} --run=python
 
 mypy:
 	mypy keycloak
@@ -12,6 +12,7 @@ test:
 	docker compose run --rm tox ${ARGS}
 	coverage combine
 	coverage html
+	coverage xml
 
 build:
 	find . -name "*.egg-info" | xargs rm -rf && \

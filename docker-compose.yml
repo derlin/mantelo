@@ -18,6 +18,7 @@ services:
 
   tox:
     image: divio/multi-python:latest
+    user: '${UID}:${GID}'
     profiles: [test]
     command: tox
     environment:

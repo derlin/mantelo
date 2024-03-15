@@ -6,4 +6,6 @@ keycloak/version.py
 .eggs
 *.pyc
 *.pyo
-.tox
+.tox/
+.mypy/
+.venv/

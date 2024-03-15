@@ -38,6 +38,7 @@ dev = [
   "coverage",
   "tox",
   "mypy",
+  "check-manifest",
   "types-requests",
   "types-slumber",
 ]
@@ -62,6 +63,7 @@ ignore = [
   "tox.ini",
   "Makefile",
   "keycloak/version.py",
+  "docker-compose.yml",
 ]
 
 

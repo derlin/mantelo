@@ -1,0 +1,38 @@
+name: Build & Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install package
+        run: pip install -e .[dev]
+
+      - name: Install make
+        run: sudo apt update && sudo apt -y --no-install-recommends install make
+
+      - name: Lint
+        run: make lint ARGS=--check
+
+      - name: Check manifest
+        run: check-manifest
+
+      - name: Mypy
+        run: make mypy
+
+      - name: Pull images
+        run: docker compose pull keycloak tox
+
+      - name: Test
+        run: make test
+
+      - name: Build
+        run: make build

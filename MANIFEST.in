@@ -3,4 +3,5 @@ include README.md
 include CHANGELOG.rst
 include conftest.py
 recursive-include keycloak *.py
+recursive-include * *.py *.json
 recursive-exclude * *.pyc
