@@ -34,15 +34,16 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+  "build",
   "coverage",
   "tox",
-  "build",
+  "mypy",
+  "types-requests",
+  "types-slumber",
 ]
 
 test = [
-  "mock",
   "pytest",
-  "requests-mock",
   "pytest-cov",
 ]
 
@@ -67,9 +68,13 @@ ignore = [
 [tool.setuptools_scm]
 write_to = "keycloak/version.py"
 
+
 [tool.ruff]
 extend = "/presets/ruff.toml"
 target-version = "py310"      # lowest supported version
+extend-ignore = [
+  "S101",  # allow asserts
+]
 
 
 [tool.coverage.report]

@@ -3,6 +3,9 @@
 lint:
 	docker run --rm -it -e LINT_FOLDER_PYTHON=keycloak -v $(CURDIR):/app divio/lint /bin/lint ${ARGS} --run=python
 
+mypy:
+	mypy keycloak
+
 test:
 	coverage erase
 	docker compose up -d --wait keycloak

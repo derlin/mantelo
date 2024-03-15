@@ -19,7 +19,7 @@ def utcnow():
 class Connection(ABC):
     @abstractmethod
     def token(self) -> str:
-        pass # NOCOV
+        pass  # NOCOV
 
 
 @frozen
@@ -44,16 +44,19 @@ class Token:
     def refresh_expires_at(self) -> datetime | None:
         if not self.refresh_token:
             return None
+        assert self.refresh_expires_in
         return self.created_at + timedelta(seconds=self.refresh_expires_in)
 
     def has_refresh_token(self, _now: Callable[[], datetime] = utcnow) -> bool:
-        return bool(
-            self.refresh_token
-            and _now() < (self.refresh_expires_at - timedelta(seconds=2))
-        )
+        if (exp := self.refresh_expires_at) and _now() < (
+            exp - timedelta(seconds=2)
+        ):
+            return True
+        return False
 
     @classmethod
-    def from_dict(cls, data: dict, now: datetime | None = None):
+    def from_dict(cls, data: dict, now: datetime | None = None) -> "Token":
+        assert hasattr(cls, "__slots__")
         if now:
             data["created_at"] = now
         return cls(**{k: v for k, v in data.items() if k in cls.__slots__})
@@ -78,7 +81,7 @@ class OpenidConnection(Connection, ABC):
 
     @abstractmethod
     def _token_exchange_data(self) -> dict:
-        pass # NOCOV
+        pass  # NOCOV
 
     def _fetch_token(self) -> None:
         now = utcnow()
@@ -111,6 +114,7 @@ class OpenidConnection(Connection, ABC):
         ):
             self._fetch_token()
 
+        assert self._token
         return self._token.access_token
 
 

@@ -18,6 +18,7 @@ class HttpException(Exception):
 
     @classmethod
     def from_slumber_exception(cls, ex: SlumberHttpBaseException):
+        assert hasattr(ex, "response")
         return cls(
             url=ex.response.request.url,
             status_code=ex.response.status_code,
