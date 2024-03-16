@@ -61,10 +61,11 @@ exclude=['tests*']
 
 [tool.check-manifest]
 ignore = [
-  "tox.ini",
-  "Makefile",
   "cape/version.py",
+  "codecov.yml",
   "docker-compose.yml",
+  "Makefile",
+  "tox.ini",
 ]
 
 

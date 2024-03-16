@@ -36,3 +36,27 @@ jobs:
 
       - name: Build
         run: make build
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: .artifacts/
+
+      - name: CodeCov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: derlin/cape
+          files: .artifacts/coverage.xml
+          disable_search: true
+          # Put a plugin we don't use, to ensure it doesn't try
+          # to generate its own coverage.xml using the pycoverage plugin
+          plugins: xcode
+          verbose: true
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-after
+          path: .artifacts/
