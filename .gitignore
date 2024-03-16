@@ -1,7 +1,7 @@
 .artifacts
 build
 dist
-keycloak/version.py
+cape/version.py
 *.egg-info
 .eggs
 *.pyc

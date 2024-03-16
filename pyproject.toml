@@ -8,9 +8,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 dynamic = ["version"] # see setuptools_scm
-name = "keycloak-admin"
-description = "A full keycloak admin client"
-license = { file = "LICENSE.txt" }
+name = "cape"
+description = "The Keycloak Admin REST API Client, for Python!"
+license = { file = "LICENSE" }
 authors = [{ name = "Lucy Linder", email = "lucy.derlin@gmail.com" }]
 readme = "README.md"
 
@@ -20,6 +20,7 @@ classifiers = [
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Topic :: Software Development",
 ]
 
@@ -27,7 +28,6 @@ requires-python = ">=3.10"
 
 dependencies = [
   "attrs",
-  "pyjwt",
   "requests",
   "slumber",
 ]
@@ -51,24 +51,25 @@ test = [
 
 [tool.setuptools]
 include-package-data = false
-zip-safe = false
 platforms = ["any"]
 
 [tool.setuptools.packages.find]
-# empty to let setuptools do its magic
+# Do not include tests in the wheel, as they
+# require keycloak anyway
+exclude=['tests*']
 
 
 [tool.check-manifest]
 ignore = [
   "tox.ini",
   "Makefile",
-  "keycloak/version.py",
+  "cape/version.py",
   "docker-compose.yml",
 ]
 
 
 [tool.setuptools_scm]
-write_to = "keycloak/version.py"
+write_to = "cape/version.py"
 
 
 [tool.ruff]
@@ -103,7 +104,7 @@ branch = true
 relative_files = true
 source = ["."]
 data_file = ".artifacts/.coverage"
-omit = ["keycloak/version.py"]
+omit = ["cape/version.py"]
 
 [tool.pytest.ini_options]
 markers = ["integration"]

@@ -1,8 +1,8 @@
 import pytest
 from . import constants
-from keycloak import KeycloakAdmin
-from keycloak.client import BearerAuth
-from keycloak.exceptions import HttpException
+from cape import KeycloakAdmin
+from cape.client import BearerAuth
+from cape.exceptions import HttpException
 import requests
 
 

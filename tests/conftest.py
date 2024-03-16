@@ -1,4 +1,4 @@
-from keycloak.connection import UsernamePasswordConnection, ServiceAccountConnection
+from cape.connection import UsernamePasswordConnection, ServiceAccountConnection
 from . import constants
 import pytest
 
