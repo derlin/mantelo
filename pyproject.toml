@@ -6,6 +6,13 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
+
+[project.urls]
+Homepage = "https://github.com/derlin/cape"
+Source = "https://github.com/derlin/cape"
+#documentation = TODO
+Changelog = "https://github.com/derlin/cape/CHANGELOG.md"
+
 [project]
 dynamic = ["version"] # see setuptools_scm
 name = "cape"
@@ -13,15 +20,20 @@ description = "The Keycloak Admin REST API Client, for Python!"
 license = { file = "LICENSE" }
 authors = [{ name = "Lucy Linder", email = "lucy.derlin@gmail.com" }]
 readme = "README.md"
+keywords = ["keycloak", "http", "rest", "requests", "client"]
 
 classifiers = [
   "Intended Audience :: Developers",
+  "Environment :: Web Environment",
+  "License :: OSI Approved :: Apache Software License",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-  "Topic :: Software Development",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Utilities",
 ]
 
 requires-python = ">=3.10"

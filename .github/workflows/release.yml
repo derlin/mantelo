@@ -35,7 +35,6 @@ jobs:
       - name: Checkout tag ${{ needs.release-please.outputs.tag_name }}
         uses: actions/checkout@v4
         with:
-          #ref: 0.0.1
           ref: ${{ needs.release-please.outputs.tag_name }}
           fetch-depth: 0
 
@@ -62,7 +61,6 @@ jobs:
       - name: Add files to Release
         uses: softprops/action-gh-release@v1
         with:
-          #tag_name: 0.0.1
           tag_name: ${{ needs.release-please.outputs.tag_name }}
           files: |
             dist/*.whl
