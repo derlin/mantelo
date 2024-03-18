@@ -8,14 +8,14 @@ build-backend = "setuptools.build_meta"
 
 
 [project.urls]
-Homepage = "https://github.com/derlin/cape"
-Source = "https://github.com/derlin/cape"
+Homepage = "https://github.com/derlin/mantelo"
+Source = "https://github.com/derlin/mantelo"
 #documentation = TODO
-Changelog = "https://github.com/derlin/cape/CHANGELOG.md"
+Changelog = "https://github.com/derlin/mantelo/CHANGELOG.md"
 
 [project]
 dynamic = ["version"] # see setuptools_scm
-name = "cape"
+name = "mantelo"
 description = "The Keycloak Admin REST API Client, for Python!"
 license = { file = "LICENSE" }
 authors = [{ name = "Lucy Linder", email = "lucy.derlin@gmail.com" }]
@@ -73,7 +73,7 @@ exclude=['tests*']
 
 [tool.check-manifest]
 ignore = [
-  "cape/version.py",
+  "mantelo/version.py",
   "codecov.yml",
   "docker-compose.yml",
   "Makefile",
@@ -82,7 +82,7 @@ ignore = [
 
 
 [tool.setuptools_scm]
-write_to = "cape/version.py"
+write_to = "mantelo/version.py"
 
 
 [tool.ruff]
@@ -117,7 +117,7 @@ branch = true
 relative_files = true
 source = ["."]
 data_file = ".artifacts/.coverage"
-omit = ["cape/version.py"]
+omit = ["mantelo/version.py"]
 
 [tool.pytest.ini_options]
 markers = ["integration"]

@@ -1,7 +1,7 @@
 import pytest
 
 from attrs import evolve
-from cape.connection import Token, AuthenticationException
+from mantelo.connection import Token, AuthenticationException
 from datetime import datetime, timedelta, timezone
 
 

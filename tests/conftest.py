@@ -1,4 +1,4 @@
-from cape.connection import UsernamePasswordConnection, ServiceAccountConnection
+from mantelo.connection import UsernamePasswordConnection, ServiceAccountConnection
 from . import constants
 import pytest
 

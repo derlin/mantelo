@@ -47,7 +47,7 @@ jobs:
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: derlin/cape
+          slug: derlin/mantelo
           files: .artifacts/coverage.xml
           disable_search: true
           # Put a plugin we don't use, to ensure it doesn't try

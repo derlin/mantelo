@@ -1,10 +1,10 @@
 .PHONY: lint test setup_build build
 
 lint:
-	docker run --rm -e LINT_FOLDER_PYTHON=cape -v $(CURDIR):/app divio/lint /bin/lint ${ARGS} --run=python
+	docker run --rm -e LINT_FOLDER_PYTHON=mantelo -v $(CURDIR):/app divio/lint /bin/lint ${ARGS} --run=python
 
 mypy:
-	mypy cape
+	mypy mantelo
 
 test:
 	coverage erase

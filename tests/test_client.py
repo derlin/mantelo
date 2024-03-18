@@ -1,8 +1,8 @@
 import pytest
 from . import constants
-from cape import KeycloakAdmin
-from cape.client import BearerAuth
-from cape.exceptions import HttpException
+from mantelo import KeycloakAdmin
+from mantelo.client import BearerAuth
+from mantelo.exceptions import HttpException
 import requests
 
 

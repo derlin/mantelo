@@ -1,7 +1,7 @@
 .artifacts
 build
 dist
-cape/version.py
+mantelo/version.py
 *.egg-info
 .eggs
 *.pyc
