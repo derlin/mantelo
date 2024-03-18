@@ -7,7 +7,7 @@
 
 **✨✨ MANTELO is a super small yet super powerful tool for interacting with the Keycloak Admin API ✨✨**
 
-> Mantelo [manˈtelo], from German "Mantel", from Late Latin "mantum" means "cloak" in Esperanto.
+> Mantelo [manˈtelo], from German "*Mantel*", from Late Latin "*mantum*" means "*cloak*" in Esperanto.
 
 It stays always **fresh** and **complete** because it does not implement or wrap any endpoint.
 Instead, it offers an object-oriented interface to the Keycloak ReSTful API. Acting as a wrapper
@@ -25,11 +25,12 @@ the excellent [slumber](https://slumber.readthedocs.io/) library.
 - [🚀 Why mantelo?](#-why-mantelo)
 - [🏁 Getting started](#-getting-started)
 - [🔐 Authenticate to Keycloak](#-authenticate-to-keycloak)
-  - [Authenticating with username+password](#authenticating-with-usernamepassword)
-  - [Authenticating with a service account (client ID + secret)](#authenticating-with-a-service-account-client-id--secret)
-  - [Other ways of authenticating](#other-ways-of-authenticating)
+   * [Authenticating with username+password](#authenticating-with-usernamepassword)
+   * [Authenticating with a service account (client ID + secret)](#authenticating-with-a-service-account-client-id--secret)
+   * [Other ways of authenticating](#other-ways-of-authenticating)
 - [📡 Making calls](#-making-calls)
 - [💀 Exceptions](#-exceptions)
+- [🔧 Development](#-development)
 
 <!-- TOC end -->
 
@@ -298,3 +299,48 @@ HttpException(
     response='<requests.Response>',
 )
 ```
+
+---
+
+## 🔧 Development
+
+Prerequisites:
+
+- Python
+- Docker
+
+To work on this library locally, install the library in edit mode along with the dev dependencies:
+
+```bash
+# Use .[dev,test] to also install pytest and related libraries
+pip install -e '.[dev]'
+```
+
+A **Makefile** is available for all the usual development tasks. Use help to list the available
+commands:
+
+```bash
+make help
+```
+```text
+Build
+  build  Build the wheels and sdist.
+
+Development
+  lint   Run ruff to format and lint (inside docker).
+  test   Run tests with tox (inside docker).
+  mypy   Run mypy locally to check types.
+  export-realms  Export test realms after changes in Keycloak Test Server.
+```
+
+Note that `make test` automatically starts a Keycloak container if it isn't already running. You may
+have to stop it manually. The test server is configured using the resources in `tests/realms` and is
+available at `http://localhost:9090`. To start the Keycloak server yourself:
+
+```bash
+docker compose up --wait
+```
+
+You can run the tests directly using `pytest` for faster development, just ensure you installed the
+test dependencies (`pip install -e '.[dev,test]'`) and Keycloak is running.
+
