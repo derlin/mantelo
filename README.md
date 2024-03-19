@@ -1,7 +1,7 @@
 # mantelo: A Keycloak Admin REST Api Client for Python
 
 [![codecov](https://codecov.io/gh/derlin/mantelo/graph/badge.svg?token=5Y2O7B7342)](https://codecov.io/gh/derlin/mantelo)
-![PyPI - Python Version](https://img.shields.io/pypi/v/mantelo)
+[![PyPI](https://img.shields.io/pypi/v/mantelo)](https://pypi.org/project/mantelo/)
 
 ---
 

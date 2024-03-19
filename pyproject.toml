@@ -16,7 +16,7 @@ Changelog = "https://github.com/derlin/mantelo/CHANGELOG.md"
 [project]
 dynamic = ["version"] # see setuptools_scm
 name = "mantelo"
-description = "The Keycloak Admin REST API Client, for Python!"
+description = "✨ Keycloak Admin REST Api Client for Python ✨"
 license = { file = "LICENSE" }
 authors = [{ name = "Lucy Linder", email = "lucy.derlin@gmail.com" }]
 readme = "README.md"
