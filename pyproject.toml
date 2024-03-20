@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 [project.urls]
 Homepage = "https://github.com/derlin/mantelo"
 Source = "https://github.com/derlin/mantelo"
-#documentation = TODO
+"Issue tracker" = "https://github.com/derlin/mantelo/issues"
 Changelog = "https://github.com/derlin/mantelo/CHANGELOG.md"
 
 [project]
@@ -62,7 +62,6 @@ test = [
 
 
 [tool.setuptools]
-include-package-data = false
 platforms = ["any"]
 
 [tool.setuptools.packages.find]
