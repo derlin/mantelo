@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.1](https://github.com/derlin/mantelo/compare/v1.0.0...v1.0.1) (2024-03-21)
+
+
+### 🐛 Bug Fixes
+
+* add author and version information to package ([33603fb](https://github.com/derlin/mantelo/commit/33603fb1f88a64beebec77e32b4774c2a585c897))
+* add py.typed file ([fc371da](https://github.com/derlin/mantelo/commit/fc371da3f27ba9cbc8d74a3891050d4ee84c49a8))
+* make BearerAuth's token_getter public ([b94f33c](https://github.com/derlin/mantelo/commit/b94f33cd26a489265fc741f18c6d9fd3cedb4e7a))
+
+
+### 💬 Documentation
+
+* create a CONTRIBUTING guide ([fb29ebb](https://github.com/derlin/mantelo/commit/fb29ebb1844156595c043a62bc334fce16b20932))
+
 ## 1.0.0 (2024-03-18)
 
 
