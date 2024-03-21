@@ -77,6 +77,7 @@ ignore = [
   "docker-compose.yml",
   "Makefile",
   "tox.ini",
+  "CONTRIBUTING.md",
 ]
 
 
