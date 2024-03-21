@@ -48,14 +48,14 @@ def test_password_connection():
 
 
 @pytest.mark.integration
-def test_admin_password_connection():
+def test_different_auth_realm(openid_connection_admin):
     adm = KeycloakAdmin.from_credentials(
-        server_url=constants.TEST_SERVER_URL,
+        server_url=openid_connection_admin.server_url,
         realm_name=constants.TEST_REALM,
-        client_id=constants.ADMIN_CLI_CLIENT,
-        username=constants.TEST_MASTER_USER,
-        password=constants.TEST_MASTER_PASSWORD,
-        authentication_realm_name=constants.MASTER_REALM,
+        client_id=openid_connection_admin.client_id,
+        username=openid_connection_admin.username,
+        password=openid_connection_admin.password,
+        authentication_realm_name=openid_connection_admin.realm_name,
     )
 
     resp = [u["username"] for u in adm.users.get()]
@@ -113,7 +113,6 @@ def test_headers(openid_connection_password):
     headers = {"foo": "foo", "bar": "bar"}
     adm = KeycloakAdmin.create(
         connection=openid_connection_password,
-        headers=headers,
     )
 
     session_headers = adm._store["session"].headers

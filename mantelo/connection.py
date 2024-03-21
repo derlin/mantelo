@@ -11,6 +11,29 @@ from .exceptions import AuthenticationException
 
 logger = getLogger(__name__)
 
+_NO_AUTH = lambda r: r  # noqa: E731
+
+
+# TODO: those converters are ugly, but due to a bug in mypy
+# (see https://github.com/python/mypy/issues/6535),
+# it is not possible to use the `default_if_none` converter
+# for now.
+# Proper field arguments to use once fixed:
+#   converter=default_if_none(timedelta(seconds=30)),
+#   converter=default_if_none(Factory(requests.Session)),
+#
+def _session_if_none_converter(value) -> requests.Session:
+    if value is None:
+        return requests.Session()
+    assert isinstance(value, requests.Session)
+    return value
+
+
+def _timedelta_if_none_converter(value: timedelta | None) -> timedelta:
+    if value is None:
+        return timedelta(seconds=30)
+    return value
+
 
 def utcnow():
     return datetime.now(timezone.utc)
@@ -67,8 +90,16 @@ class OpenidConnection(Connection, ABC):
     server_url: str
     realm_name: str
     client_id: str
+
+    session: requests.Session = field(
+        default=Factory(requests.Session),
+        converter=_session_if_none_converter,
+        kw_only=True,
+    )
     refresh_timeout: timedelta = field(
-        default=timedelta(seconds=30), kw_only=True
+        default=timedelta(seconds=30),
+        converter=_timedelta_if_none_converter,
+        kw_only=True,
     )
 
     _token: Token | None = field(
@@ -97,7 +128,9 @@ class OpenidConnection(Connection, ABC):
             logger.debug("Fetching token")
             data = self._token_exchange_data()
 
-        resp = requests.post(self.auth_url, data=data)
+        # Ensure the call does not use authentication,
+        # to avoid recursion errors.
+        resp = self.session.post(self.auth_url, data=data, auth=_NO_AUTH)
         if resp.status_code == 401:
             raise AuthenticationException(**resp.json())
         resp.raise_for_status()

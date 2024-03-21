@@ -46,13 +46,7 @@ class KeycloakAdmin(HypenatedResourceMixin, slumber.API):
         realm_name: str,
         auth: requests.auth.AuthBase,
         session: requests.Session | None = None,
-        headers: dict[str, str] | None = None,
     ):
-        if headers:
-            if not session:
-                session = requests.session()
-            session.headers.update(headers)
-
         super().__init__(
             base_url=f"{server_url}/admin/realms/{realm_name}",
             auth=auth,
@@ -65,13 +59,12 @@ class KeycloakAdmin(HypenatedResourceMixin, slumber.API):
         cls,
         connection: OpenidConnection,
         realm_name: str | None = None,
-        headers: dict[str, str] | None = None,
     ):
         return cls(
             connection.server_url,
             realm_name or connection.realm_name,
             BearerAuth(connection.token),
-            headers=headers,
+            session=connection.session,
         )
 
     @classmethod
@@ -82,18 +75,18 @@ class KeycloakAdmin(HypenatedResourceMixin, slumber.API):
         client_id: str,
         client_secret: str,
         authentication_realm_name: str | None = None,
-        headers: dict[str, str] | None = None,
+        session: requests.Session | None = None,
     ):
         openid_connection = ServiceAccountConnection(
             server_url=server_url,
             realm_name=authentication_realm_name or realm_name,
             client_id=client_id,
             client_secret=client_secret,
+            session=session,
         )
         return cls.create(
             openid_connection,
             realm_name=realm_name,
-            headers=headers,
         )
 
     @classmethod
@@ -105,7 +98,7 @@ class KeycloakAdmin(HypenatedResourceMixin, slumber.API):
         username: str,
         password: str,
         authentication_realm_name: str | None = None,
-        headers: dict[str, str] | None = None,
+        session: requests.Session | None = None,
     ):
         openid_connection = UsernamePasswordConnection(
             server_url=server_url,
@@ -113,9 +106,10 @@ class KeycloakAdmin(HypenatedResourceMixin, slumber.API):
             client_id=client_id,
             username=username,
             password=password,
+            session=session,
         )
+
         return cls.create(
             openid_connection,
             realm_name=realm_name,
-            headers=headers,
         )
