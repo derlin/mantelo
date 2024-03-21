@@ -14,12 +14,14 @@ def test_init(openid_connection_password):
         realm_name=constants.TEST_REALM,
         auth=BearerAuth(openid_connection_password.token),
         session=session,
-        headers={"foo": "bar"},
     )
 
-    s = adm._store["session"]
-    assert s == session
-    assert s.headers.get("foo") == "bar"
+    assert adm.session == session
+    assert adm.realm_name == constants.TEST_REALM
+    assert (
+        adm.base_url
+        == f"{constants.TEST_SERVER_URL}/admin/realms/{constants.TEST_REALM}"
+    )
 
     resp = [u["username"] for u in adm.users.get()]
     assert constants.TEST_USER in resp
@@ -29,19 +31,33 @@ def test_init(openid_connection_password):
 def test_create(openid_connection_sa):
     adm = KeycloakAdmin.create(openid_connection_sa)
 
+    assert adm.session == openid_connection_sa.session
+    assert adm.realm_name == openid_connection_sa.realm_name
+    assert (
+        adm.base_url
+        == f"{openid_connection_sa.server_url}/admin/realms/{openid_connection_sa.realm_name}"
+    )
     resp = [u["username"] for u in adm.users.get()]
     assert constants.TEST_USER in resp
 
 
 @pytest.mark.integration
-def test_password_connection():
+@pytest.mark.parametrize("with_custom_session", [True, False])
+def test_password_connection(with_custom_session):
+    session = requests.Session() if with_custom_session else None
+
     adm = KeycloakAdmin.from_credentials(
         server_url=constants.TEST_SERVER_URL,
         realm_name=constants.TEST_REALM,
         client_id=constants.ADMIN_CLI_CLIENT,
         username=constants.TEST_USER,
         password=constants.TEST_PASSWORD,
+        session=session,
     )
+
+    assert adm.session == adm.session.auth.token_getter.__self__.session
+    if session:
+        assert adm.session == session
 
     resp = [u["username"] for u in adm.users.get()]
     assert constants.TEST_USER in resp
@@ -109,15 +125,22 @@ def test_exceptions(openid_connection_password, status, op):
     assert isinstance(ex.response, requests.Response)
 
 
+@pytest.mark.integration
 def test_headers(openid_connection_password):
     headers = {"foo": "foo", "bar": "bar"}
+
     adm = KeycloakAdmin.create(
         connection=openid_connection_password,
     )
+    adm.session.headers.update(headers)
 
-    session_headers = adm._store["session"].headers
+    # Trigger an exception to get the request object
+    with pytest.raises(HttpException) as excinfo:
+        adm.non_existant.get()
+
+    hs = excinfo.value.response.request.headers
     for k, v in headers.items():
-        assert session_headers.get(k) == v
+        assert hs.get(k) == v
 
 
 def test_resource_private(openid_connection_password):

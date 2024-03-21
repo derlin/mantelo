@@ -1,8 +1,14 @@
 import pytest
 
 from attrs import evolve
-from mantelo.connection import Token, AuthenticationException
+from mantelo.connection import (
+    Token,
+    AuthenticationException,
+    ServiceAccountConnection,
+    UsernamePasswordConnection,
+)
 from datetime import datetime, timedelta, timezone
+import requests
 
 
 def test_token_from_dict():
@@ -94,6 +100,84 @@ def test_token_has_refresh_token(ok, token, now_delta):
     assert res == ok
 
 
+def test_userpasswordconnection_init():
+    conn = UsernamePasswordConnection(
+        server_url="https://kc.test",
+        realm_name="test",
+        client_id="foo-client",
+        username="u",
+        password="p",
+    )
+    assert (
+        conn.auth_url
+        == "https://kc.test/realms/test/protocol/openid-connect/token"
+    )
+    assert conn._token_exchange_data() == {
+        "scope": "openid",
+        "grant_type": "password",
+        "client_id": "foo-client",
+        "username": "u",
+        "password": "p",
+    }
+    assert isinstance(conn.session, requests.Session)
+    assert conn.refresh_timeout == timedelta(seconds=30)
+
+
+def test_serviceaccountconnection_init():
+    conn = ServiceAccountConnection(
+        server_url="https://kc.test",
+        realm_name="test",
+        client_id="foo-client",
+        client_secret="s3cr3t",
+    )
+    assert (
+        conn.auth_url
+        == "https://kc.test/realms/test/protocol/openid-connect/token"
+    )
+    assert conn._token_exchange_data() == {
+        "scope": "openid",
+        "grant_type": "client_credentials",
+        "client_id": "foo-client",
+        "client_secret": "s3cr3t",
+    }
+    assert isinstance(conn.session, requests.Session)
+    assert conn.refresh_timeout == timedelta(seconds=30)
+
+
+def test_openidconnection_default_values():
+    args = dict(
+        server_url="https://kc.test",
+        realm_name="test",
+        client_id="foo-client",
+        client_secret="s3cr3t",
+    )
+
+    # Defaults
+    conn = ServiceAccountConnection(**args)
+    assert isinstance(conn.session, requests.Session)
+    assert conn.refresh_timeout == timedelta(seconds=30)
+
+    # Override defaults
+    session = requests.Session()
+    timeout = timedelta(seconds=120)
+    conn = ServiceAccountConnection(
+        **args,
+        session=session,
+        refresh_timeout=timeout,
+    )
+    assert conn.session == session
+    assert conn.refresh_timeout == timeout
+
+    # None values fallback to the default values
+    conn = ServiceAccountConnection(
+        **args,
+        session=None,
+        refresh_timeout=None,
+    )
+    assert isinstance(conn.session, requests.Session)
+    assert conn.refresh_timeout == timedelta(seconds=30)
+
+
 @pytest.mark.integration
 def test_openid_token(openid_connection_password):
     assert not openid_connection_password._token
@@ -120,7 +204,9 @@ def test_openid_token(openid_connection_password):
         created_at=datetime.now(timezone.utc) - timedelta(days=1),
     )
     assert openid_connection_password.token() != access_token
-    assert openid_connection_password._token.expires_at > datetime.now(timezone.utc)
+    assert openid_connection_password._token.expires_at > datetime.now(
+        timezone.utc
+    )
 
 
 @pytest.mark.integration
@@ -135,9 +221,7 @@ def test_openid_refresh_token(openid_connection_password):
     openid_connection_password.password = "invalid"
     openid_connection_password._fetch_token()
     assert openid_connection_password._token
-    assert (
-        openid_connection_password._token.expires_at > token.expires_at
-    )
+    assert openid_connection_password._token.expires_at > token.expires_at
 
 
 @pytest.mark.integration

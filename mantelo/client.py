@@ -54,6 +54,18 @@ class KeycloakAdmin(HypenatedResourceMixin, slumber.API):
             append_slash=False,
         )
 
+    @property
+    def session(self):
+        return self._store["session"]
+
+    @property
+    def base_url(self):
+        return self._store["base_url"]
+
+    @property
+    def realm_name(self):
+        return self._store["base_url"].split("/realms/")[1]
+
     @classmethod
     def create(
         cls,
