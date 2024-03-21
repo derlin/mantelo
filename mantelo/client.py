@@ -2,6 +2,7 @@ from collections.abc import Callable
 
 import requests
 import slumber
+from attrs import define
 from slumber.exceptions import SlumberHttpBaseException
 
 from .connection import (
@@ -27,12 +28,12 @@ class HypenatedResource(HypenatedResourceMixin, slumber.Resource):
             raise HttpException.from_slumber_exception(ex) from None
 
 
+@define
 class BearerAuth(requests.auth.AuthBase):
-    def __init__(self, token_getter: Callable[[], str]):
-        self._token_getter = token_getter
+    token_getter: Callable[[], str]
 
     def __call__(self, r):
-        r.headers["Authorization"] = f"Bearer {self._token_getter()}"
+        r.headers["Authorization"] = f"Bearer {self.token_getter()}"
         return r
 
 
