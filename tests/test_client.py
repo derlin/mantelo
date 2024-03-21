@@ -64,6 +64,19 @@ def test_password_connection(with_custom_session):
 
 
 @pytest.mark.integration
+def test_client_connection():
+    adm = KeycloakAdmin.from_service_account(
+        server_url=constants.TEST_SERVER_URL,
+        realm_name=constants.TEST_REALM,
+        client_id=constants.TEST_CLIENT_ID,
+        client_secret=constants.TEST_CLIENT_SECRET,
+    )
+
+    resp = [u["username"] for u in adm.users.get()]
+    assert constants.TEST_USER in resp
+
+
+@pytest.mark.integration
 def test_different_auth_realm(openid_connection_admin):
     adm = KeycloakAdmin.from_credentials(
         server_url=openid_connection_admin.server_url,
@@ -79,13 +92,19 @@ def test_different_auth_realm(openid_connection_admin):
 
 
 @pytest.mark.integration
-def test_client_connection():
-    adm = KeycloakAdmin.from_service_account(
-        server_url=constants.TEST_SERVER_URL,
-        realm_name=constants.TEST_REALM,
-        client_id=constants.TEST_CLIENT_ID,
-        client_secret=constants.TEST_CLIENT_SECRET,
-    )
+def test_switch_realm(openid_connection_admin):
+    adm = KeycloakAdmin.create(connection=openid_connection_admin)
+    assert openid_connection_admin.realm_name == constants.MASTER_REALM
+    assert adm.realm_name == constants.MASTER_REALM
+
+    resp = [u["username"] for u in adm.users.get()]
+    assert constants.TEST_MASTER_USER in resp
+
+    # Switch to another realm
+    adm.realm_name = constants.TEST_REALM
+
+    assert adm.realm_name == constants.TEST_REALM
+    assert openid_connection_admin.realm_name == constants.MASTER_REALM
 
     resp = [u["username"] for u in adm.users.get()]
     assert constants.TEST_USER in resp
