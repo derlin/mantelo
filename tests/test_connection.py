@@ -4,7 +4,7 @@ from attrs import evolve
 from mantelo.connection import (
     Token,
     AuthenticationException,
-    ServiceAccountConnection,
+    ClientCredentialsConnection,
     UsernamePasswordConnection,
 )
 from datetime import datetime, timedelta, timezone
@@ -123,8 +123,8 @@ def test_userpasswordconnection_init():
     assert conn.refresh_timeout == timedelta(seconds=30)
 
 
-def test_serviceaccountconnection_init():
-    conn = ServiceAccountConnection(
+def test_ClientCredentialsconnection_init():
+    conn = ClientCredentialsConnection(
         server_url="https://kc.test",
         realm_name="test",
         client_id="foo-client",
@@ -153,14 +153,14 @@ def test_openidconnection_default_values():
     )
 
     # Defaults
-    conn = ServiceAccountConnection(**args)
+    conn = ClientCredentialsConnection(**args)
     assert isinstance(conn.session, requests.Session)
     assert conn.refresh_timeout == timedelta(seconds=30)
 
     # Override defaults
     session = requests.Session()
     timeout = timedelta(seconds=120)
-    conn = ServiceAccountConnection(
+    conn = ClientCredentialsConnection(
         **args,
         session=session,
         refresh_timeout=timeout,
@@ -169,7 +169,7 @@ def test_openidconnection_default_values():
     assert conn.refresh_timeout == timeout
 
     # None values fallback to the default values
-    conn = ServiceAccountConnection(
+    conn = ClientCredentialsConnection(
         **args,
         session=None,
         refresh_timeout=None,

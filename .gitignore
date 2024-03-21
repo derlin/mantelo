@@ -9,3 +9,4 @@ mantelo/version.py
 .tox/
 .mypy/
 .venv/
+__pycache__

@@ -1,6 +1,6 @@
 from mantelo.connection import (
     UsernamePasswordConnection,
-    ServiceAccountConnection,
+    ClientCredentialsConnection,
 )
 from . import constants
 import pytest
@@ -19,7 +19,7 @@ def openid_connection_password():
 
 @pytest.fixture()
 def openid_connection_sa():
-    return ServiceAccountConnection(
+    return ClientCredentialsConnection(
         server_url=constants.TEST_SERVER_URL,
         realm_name=constants.TEST_REALM,
         client_id=constants.TEST_CLIENT_ID,

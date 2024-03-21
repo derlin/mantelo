@@ -63,14 +63,14 @@ Now, assuming you have a Keycloak Server running, what's left is to:
 1. authenticate, see [🔐 Authenticate to Keycloak](#-authenticate-to-keycloak)
 2. make calls, see [📡 Making calls](#-making-calls)
 
-For a quick test-drive, use the [docker-compose.yml](docker-compose.yml) included
+For a quick test drive, use the [docker-compose.yml](docker-compose.yml) included
 in this repo and start a Keycloak server locally using `docker compose up`.
 Open a Python REPL and type:
 
 ```python
 from mantelo import KeycloakAdmin
 
-c = KeycloakAdmin.from_credentials(
+c = KeycloakAdmin.from_username_password(
     server_url="http://localhost:9090",
     realm_name="master",
     client_id="admin-cli",
@@ -98,8 +98,8 @@ setup the admin user with the password `admin`.
 
 ## 🔐 Authenticate to Keycloak
 
-To authenticate to Keycloak, you can either use a username+password, or a service account (client
-ID+client secret).
+To authenticate to Keycloak, you can either use a username+password, or client credentials (client
+ID+client secret, also known as service account).
 
 The library takes care of fetching a token the first time you need it and keeping it fresh. By
 default, it tries to use the refresh token (if available) and always guarantees the token is valid
@@ -121,7 +121,7 @@ Here is how to connect to the default realm with the admin user and `admin-cli` 
 ```python
 from mantelo import KeycloakAdmin
 
-client = KeycloakAdmin.from_credentials(
+client = KeycloakAdmin.from_username_password(
     server_url="http://localhost:8080", # base Keycloak URL
     realm_name="master",
     # ↓↓ Authentication
@@ -138,7 +138,7 @@ you want to query, use the argument `authentication_realm`:
 ```python
 from mantelo import KeycloakAdmin
 
-client = KeycloakAdmin.from_credentials(
+client = KeycloakAdmin.from_username_password(
     server_url="http://localhost:8080", # base Keycloak URL
     realm_name="my-realm", # realm for querying
     # ↓↓ Authentication
@@ -149,7 +149,7 @@ client = KeycloakAdmin.from_credentials(
 )
 ```
 
-### Authenticating with a service account (client ID + secret)
+### Authenticating with client credentials (client ID + secret)
 
 To authenticate via a client, the latter needs:
 
@@ -164,7 +164,7 @@ Here is how to connect with a client:
 ```python
 from mantelo import KeycloakAdmin
 
-client = KeycloakAdmin.from_service_account(
+client = KeycloakAdmin.from_client_credentials(
     server_url="http://localhost:8080", # base Keycloak URL
     realm_name="master",
     # ↓↓ Authentication
@@ -180,7 +180,7 @@ you want to query, use the argument `authentication_realm`:
 ```python
 from mantelo import KeycloakAdmin
 
-client = KeycloakAdmin.from_service_account(
+client = KeycloakAdmin.from_client_credentials(
     server_url="http://localhost:8080", # base Keycloak URL
     realm_name="my-realm", # realm for querying
     # ↓↓ Authentication
@@ -202,7 +202,7 @@ an existing token directly (not recommended, as tokens are short-lived):
 from mantelo.client import BearerAuth, KeycloakAdmin
 
 KeycloakAdmin(
-    server_url="http://localhost:8080"
+    server_url="http://localhost:8080",
     realm_name="master",
     auth=BearerAuth(lambda: "my-token"),
 )
@@ -213,11 +213,16 @@ If you want to go further, you can create your own `Connection` class (or extend
 
 ```python
 from mantelo.client import BearerAuth, KeycloakAdmin
+from mantelo.connection import Connection
 
-connection = Connection(...)
+class MyConnection(Connection):
+    def token(self):
+        return "<do-something-here>"
+
+connection = MyConnection()
 
 KeycloakAdmin(
-    server_url="http://localhost:8080"
+    server_url="http://localhost:8080",
     realm_name="master",
     auth=BearerAuth(connection.token),
 )

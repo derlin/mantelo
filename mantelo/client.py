@@ -6,8 +6,8 @@ from attrs import define
 from slumber.exceptions import SlumberHttpBaseException
 
 from .connection import (
+    ClientCredentialsConnection,
     OpenidConnection,
-    ServiceAccountConnection,
     UsernamePasswordConnection,
 )
 from .exceptions import HttpException
@@ -85,7 +85,7 @@ class KeycloakAdmin(HypenatedResourceMixin, slumber.API):
         )
 
     @classmethod
-    def from_service_account(
+    def from_client_credentials(
         cls,
         server_url: str,
         realm_name: str,
@@ -94,7 +94,7 @@ class KeycloakAdmin(HypenatedResourceMixin, slumber.API):
         authentication_realm_name: str | None = None,
         session: requests.Session | None = None,
     ):
-        openid_connection = ServiceAccountConnection(
+        openid_connection = ClientCredentialsConnection(
             server_url=server_url,
             realm_name=authentication_realm_name or realm_name,
             client_id=client_id,
@@ -107,7 +107,7 @@ class KeycloakAdmin(HypenatedResourceMixin, slumber.API):
         )
 
     @classmethod
-    def from_credentials(
+    def from_username_password(
         cls,
         server_url: str,
         realm_name: str,

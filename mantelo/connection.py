@@ -167,7 +167,7 @@ class UsernamePasswordConnection(OpenidConnection):
 
 
 @define
-class ServiceAccountConnection(OpenidConnection):
+class ClientCredentialsConnection(OpenidConnection):
     client_secret: str
 
     def _token_exchange_data(self) -> dict:

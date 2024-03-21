@@ -46,7 +46,7 @@ def test_create(openid_connection_sa):
 def test_password_connection(with_custom_session):
     session = requests.Session() if with_custom_session else None
 
-    adm = KeycloakAdmin.from_credentials(
+    adm = KeycloakAdmin.from_username_password(
         server_url=constants.TEST_SERVER_URL,
         realm_name=constants.TEST_REALM,
         client_id=constants.ADMIN_CLI_CLIENT,
@@ -65,7 +65,7 @@ def test_password_connection(with_custom_session):
 
 @pytest.mark.integration
 def test_client_connection():
-    adm = KeycloakAdmin.from_service_account(
+    adm = KeycloakAdmin.from_client_credentials(
         server_url=constants.TEST_SERVER_URL,
         realm_name=constants.TEST_REALM,
         client_id=constants.TEST_CLIENT_ID,
@@ -78,7 +78,7 @@ def test_client_connection():
 
 @pytest.mark.integration
 def test_different_auth_realm(openid_connection_admin):
-    adm = KeycloakAdmin.from_credentials(
+    adm = KeycloakAdmin.from_username_password(
         server_url=openid_connection_admin.server_url,
         realm_name=constants.TEST_REALM,
         client_id=openid_connection_admin.client_id,
