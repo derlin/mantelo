@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.0.0](https://github.com/derlin/mantelo/compare/v1.0.1...v2.0.0) (2024-03-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* rename "ServiceAccount" to "ClientCredentials" and KeycloakAdmin class methods
+* drop custom headers support and share session between auth and client
+
+### 🚀 Features
+
+* add the possibility to switch realms ([a6a775a](https://github.com/derlin/mantelo/commit/a6a775a55270ef1c3855772922f6e2394621647f))
+* drop custom headers support and share session between auth and client ([32e1254](https://github.com/derlin/mantelo/commit/32e1254a7032fa2d5a4146e0adb9649c9445bddb))
+* make session, base_url and realm_name available on the client ([cfdc0b5](https://github.com/derlin/mantelo/commit/cfdc0b51b60d3e741743dcbfd24bac85beddd987))
+* rename "ServiceAccount" to "ClientCredentials" and KeycloakAdmin class methods ([df55100](https://github.com/derlin/mantelo/commit/df55100982a2391c2c2b1ba6a1986b02775f98f5))
+
 ## [1.0.1](https://github.com/derlin/mantelo/compare/v1.0.0...v1.0.1) (2024-03-21)
 
 
