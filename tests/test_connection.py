@@ -234,6 +234,7 @@ def test_openid_token_fails(openid_connection_password):
 
     assert excinfo.value.error == "invalid_grant"
     assert excinfo.value.error_description == "Invalid user credentials"
+    assert isinstance(excinfo.value.response, requests.Response)
 
     openid_connection_password.username = None
     with pytest.raises(AuthenticationException) as excinfo:
@@ -241,3 +242,4 @@ def test_openid_token_fails(openid_connection_password):
 
     assert excinfo.value.error == "invalid_request"
     assert excinfo.value.error_description == "Missing parameter: username"
+    assert isinstance(excinfo.value.response, requests.Response)

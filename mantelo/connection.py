@@ -132,7 +132,7 @@ class OpenidConnection(Connection, ABC):
         # to avoid recursion errors.
         resp = self.session.post(self.auth_url, data=data, auth=_NO_AUTH)
         if resp.status_code == 401:
-            raise AuthenticationException(**resp.json())
+            raise AuthenticationException(**resp.json(), response=resp)
         resp.raise_for_status()
         self._token = Token.from_dict(resp.json(), now=now)
         logger.debug(

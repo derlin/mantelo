@@ -283,8 +283,9 @@ HttpException: (403, {'error': 'unknown_error', 'error_description': 'For more o
 
 ## 💀 Exceptions
 
-If an error occurs during _authentication_, mantelo will raise an `AuthenticationException` with the
-`error` and `errorDescription` from Keycloak. All other exceptions are instances of `HttpException`.
+If the server returns a 401 Unauthorized during the _authentication_ process, mantelo will raise an
+`AuthenticationException` with the `error` and `errorDescription` from Keycloak. All other HTTP
+exceptions are instances of `HttpException`.
 
 Here are some examples:
 
@@ -293,6 +294,7 @@ Here are some examples:
 AuthenticationException(
     error='invalid_client',
     error_description='Invalid client or Invalid client credentials'
+    response='<requests.Response>',
 )
 
 # Trying to access an endpoint without the proper permissions

@@ -7,6 +7,7 @@ from slumber.exceptions import SlumberHttpBaseException
 class AuthenticationException(Exception):
     error: str
     error_description: str
+    response: requests.Response = field(repr=False)
 
 
 @frozen
