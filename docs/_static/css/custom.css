@@ -1,0 +1,20 @@
+html {
+    --mantelo-teal-dark: #006167; 
+    --mantelo-teal: #00B7Af; 
+    --mantelo-teal-light: #D7EFDA;
+    --mantelo-yellow: #FDD401;
+    --mantelo-yellow-dark: #FABF00;
+    --mantelo-yellow-darker: #797129; /*#FA9400 orange */
+}
+
+html[data-theme="light"] {
+    --pst-color-primary: var(--mantelo-teal-dark);
+    --pst-color-secondary: var(--mantelo-teal);
+    --pst-color-inline-code: var(--mantelo-yellow-darker);
+}
+
+html[data-theme="dark"] {
+    --pst-color-primary: var(--mantelo-teal);
+    --pst-color-secondary: var(--mantelo-real-light);
+    --pst-color-inline-code: var(--mantelo-yellow);
+}

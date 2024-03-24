@@ -2,8 +2,10 @@
 
 [![codecov](https://codecov.io/gh/derlin/mantelo/graph/badge.svg?token=5Y2O7B7342)](https://codecov.io/gh/derlin/mantelo)
 [![PyPI](https://img.shields.io/pypi/v/mantelo)](https://pypi.org/project/mantelo/)
-
+[![Documentation Status](https://readthedocs.org/projects/mantelo/badge/?version=latest)](https://mantelo.readthedocs.io/en/latest/?badge=latest)
 ---
+
+<img src="https://github.com/derlin/mantelo/blob/main/docs/_static/images/mantelo-text-900.png" alt="Mantelo" width="500">
 
 **✨✨ MANTELO is a super small yet super powerful tool for interacting with the Keycloak Admin API ✨✨**
 
@@ -16,7 +18,10 @@ slumber under the hood, it abstracts all the boring stuff such as authentication
 tokens), URL handling, serialization, and the processing of requests. This magic is made possible by
 the excellent [slumber](https://slumber.readthedocs.io/) library.
 
-⮕ Any endpoint your Keycloak supports, mantelo supports!
+Any endpoint your Keycloak supports, mantelo supports!
+
+
+⮕ **Documentation: https://mantelo.readthedocs.io/en/latest/**
 
 ---
 
@@ -26,7 +31,7 @@ the excellent [slumber](https://slumber.readthedocs.io/) library.
 - [🏁 Getting started](#-getting-started)
 - [🔐 Authenticate to Keycloak](#-authenticate-to-keycloak)
    * [Authenticating with username+password](#authenticating-with-usernamepassword)
-   * [Authenticating with a service account (client ID + secret)](#authenticating-with-a-service-account-client-id--secret)
+   * [Authenticating with client credentials (client ID + secret)](#authenticating-with-client-credentials-client-id--secret)
    * [Other ways of authenticating](#other-ways-of-authenticating)
 - [📡 Making calls](#-making-calls)
 - [💀 Exceptions](#-exceptions)

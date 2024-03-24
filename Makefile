@@ -1,4 +1,4 @@
-.PHONY: all
+.PHONY: all help build docs lint test mypy export-realms
 
 default: help
 
@@ -12,6 +12,17 @@ build: ## Build the wheels and sdist.
 	find . -name "*.egg-info" | xargs rm -rf && \
 	rm -rf dist && \
 	python -m build
+
+##@ Documentation
+
+docs: ## Generate the HTML documentation.
+	cd docs && make html
+
+docs-clean: ## Remove docs build artifacts.
+	cd docs && make clean
+
+docs-open: ## Open the documentation locally (requires make docs to have ran).
+	open docs/_build/html/index.html
 
 ##@ Development
 

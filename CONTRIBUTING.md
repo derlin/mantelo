@@ -48,6 +48,11 @@ make help
 Build
   build  Build the wheels and sdist.
 
+Documentation
+  docs   Generate the HTML documentation.
+  docs-clean  Remove docs build artifacts.
+  docs-open  Open the documentation locally (requires make docs to have ran).
+
 Development
   lint   Run ruff to format and lint (inside docker).
   test   Run tests with tox (inside docker).
@@ -77,5 +82,6 @@ This repository adheres to the
 1. Fork this repository, develop and test your changes
 2. Make sure that your changes do not decrease the test coverage
 3. Create signed commits that follow the conventional commits specification
-4. Submit a pull request
+4. If necessary, update the docs
+5. Submit a pull request
 

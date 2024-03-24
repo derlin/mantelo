@@ -10,3 +10,5 @@ mantelo/version.py
 .mypy/
 .venv/
 __pycache__
+
+docs/_build
