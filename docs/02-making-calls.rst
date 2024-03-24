@@ -1,13 +1,15 @@
-.. _making_calls:
+:og:description: How to make calls to the Keycloak Admin API using mantelo.
 
-.. role:: python(code)
-   :language: python
+.. meta::
+   :description: How to make calls to the Keycloak Admin API using mantelo.
+
+.. _making_calls:
 
 📡 Making calls
 ===============
 
 Once you have configured how to authenticate to Keycloak, the rest is easy-peasy. mantelo **starts
-with the URL ``<server-url>/admin/realms/<realm-name>``** and constructs the URL from there,
+with the URL** ``<server-url>/admin/realms/<realm-name>`` and constructs the URL from there,
 depending on how you call the client.
 
 The return value is the HTTP response content as a :python:`dict` (parsed from the JSON response). In

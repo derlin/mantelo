@@ -1,3 +1,8 @@
+:og:description: Get started with mantelo.
+
+.. meta::
+   :description: Get started with mantelo.
+
 .. _getting_started:
 
 🏁 Getting started

@@ -66,6 +66,7 @@ docs = [
   "sphinx-book-theme",
   "sphinx-autoapi",
   "sphinx-copybutton",
+  "sphinxext-opengraph",
 ]
 
 

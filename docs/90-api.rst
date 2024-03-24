@@ -1,3 +1,8 @@
+:og:description: The API documentation for Mantelo.
+
+.. meta::
+   :description: The API documentation for Mantelo.
+
 .. _api:
 
 The API Documentation

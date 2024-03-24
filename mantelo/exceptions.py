@@ -6,7 +6,7 @@ from slumber.exceptions import SlumberHttpBaseException
 @frozen
 class AuthenticationException(Exception):
     """
-    Exception raised when the authentication fails with "401 Unauthorized" status code.
+    Exception raised when the authentication request fails with a `401 Unauthorized` status code.
     """
 
     error: str

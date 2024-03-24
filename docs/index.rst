@@ -1,3 +1,8 @@
+:og:description: Mantelo is a super small yet super powerful Python library for interacting with the Keycloak Admin API.
+
+.. meta::
+   :description: Mantelo is a super small yet super powerful Python library for interacting with the Keycloak Admin API.
+
 Mantelo: A Keycloak Admin REST Api Client for Python
 =====================================================
 

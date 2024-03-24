@@ -28,6 +28,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "autoapi.extension",
     "sphinx_copybutton",
+    "sphinxext.opengraph",
 ]
 
 autoapi_type = "python"
@@ -52,6 +53,10 @@ intersphinx_mapping = {
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
+rst_prolog = """
+.. role:: python(code)
+   :language: python
+"""
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -83,4 +88,9 @@ html_theme_options = {
             "type": "fontawesome",
         }
     ],
+}
+
+ogp_site_url = "https://mantelo.readthedocs.io/en/latest/"
+ogp_social_cards = {
+    "image": "_static/images/mantelo-social-preview.png",
 }

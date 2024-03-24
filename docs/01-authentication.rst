@@ -1,5 +1,9 @@
-.. _authentication:
+:og:description: How to authenticate to Keycloak using mantelo.
 
+.. meta::
+   :description: How to authenticate to Keycloak using mantelo.
+
+.. _authentication:
 
 🔐 Authenticate to Keycloak
 ===========================
