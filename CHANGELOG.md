@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.1](https://github.com/derlin/mantelo/compare/v2.0.0...v2.0.1) (2024-03-24)
+
+
+### 🐛 Bug Fixes
+
+* add response object to AuthenticationException ([feccdeb](https://github.com/derlin/mantelo/commit/feccdeb9773280a4cb8802ec3e280b7b185764ef))
+
+
+### 💬 Documentation
+
+* add opengraph meta ([0310e41](https://github.com/derlin/mantelo/commit/0310e41f87b18f844ba4a140ddc944dfb484baf2))
+* add readthedocs documentation ([04cc4d7](https://github.com/derlin/mantelo/commit/04cc4d70f3baf91050d4eecda2889b381944b820))
+
 ## [2.0.0](https://github.com/derlin/mantelo/compare/v1.0.1...v2.0.0) (2024-03-21)
 
 
