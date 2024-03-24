@@ -58,6 +58,8 @@ rst_prolog = """
    :language: python
 """
 
+
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
@@ -74,6 +76,7 @@ html_theme_options = {
         {"name": "Github", "url": "https://github.com/derlin/mantelo"},
         {"name": "PyPi", "url": "https://pypi.org/mantelo"},
     ],
+    "toc_title": "On this page",
     "icon_links": [
         {
             "name": "GitHub",
