@@ -5,8 +5,8 @@
 
 .. _authentication:
 
-🔐 Authenticate to Keycloak
-===========================
+🔐 Authenticating to Keycloak
+==============================
 
 To authenticate to Keycloak, you can either use a username+password, or client credentials (client
 ID+client secret, also known as service account).

@@ -7,7 +7,7 @@
 
 <img src="https://github.com/derlin/mantelo/blob/main/docs/_static/images/mantelo-text-900.png" alt="Mantelo" width="500">
 
-**✨✨ MANTELO is a super small yet super powerful tool for interacting with the Keycloak Admin API ✨✨**
+**✨✨ MANTELO is a super small yet super powerful library for interacting with the Keycloak Admin API ✨✨**
 
 > Mantelo [manˈtelo], from German "*Mantel*", from Late Latin "*mantum*" means "*cloak*" in Esperanto.
 

@@ -66,7 +66,7 @@ To better understand, here are some examples of URL mapping (``c`` is the
         
   .. code-block:: none
 
-    POST /admin/realms/{realm}/users/725209cd-9076-417b-a404-149a3fb8e35b?foo=1
+    POST /admin/realms/{realm}/users?foo=1
 
     > Content-Type: application/json
     > {"username": ...}
