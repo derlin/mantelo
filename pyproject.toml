@@ -87,6 +87,7 @@ ignore = [
   "Makefile",
   "tox.ini",
   "CONTRIBUTING.md",
+  "CODEOWNERS",
   ".readthedocs.yaml",
   "docs/**",
 ]
