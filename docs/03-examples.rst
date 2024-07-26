@@ -10,7 +10,7 @@
 ===========
 
 Assuming you created a client (see :ref:`authentication`), here are some examples of how to interact with the Keycloak Admin API using Mantelo.
-Don't hesitate to create an `issue <https://github.com/derlin/mantelo/issues/new/choose>` if you want to see more examples or if you have any questions.
+Don't hesitate to create an `issue <https://github.com/derlin/mantelo/issues/new/choose>`_ if you want to see more examples or if you have any questions.
 
 Create, update, and delete a user
 ---------------------------------
