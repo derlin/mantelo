@@ -59,8 +59,8 @@ def test_password_connection(with_custom_session):
     if session:
         assert adm.session == session
 
-    resp = [u["username"] for u in adm.users.get()]
-    assert constants.TEST_USER in resp
+    resp = adm.get()
+    assert resp.get("realm") == constants.TEST_REALM
 
 
 @pytest.mark.integration
@@ -167,3 +167,21 @@ def test_resource_private(openid_connection_password):
 
     with pytest.raises(AttributeError, match="_users"):
         adm._users.get()
+
+
+def test_client_as_resource():
+    adm = KeycloakAdmin(server_url="any", realm_name="any", auth=object)
+
+    # Ensure the client itself defines the get, etc operations
+    # (to query /admin/realms/{realm_name}/)
+    for op in ["head", "get", "post", "put", "delete"]:
+        assert hasattr(adm.clients, op)
+        assert f"bound method Resource.{op}" in str(getattr(adm, op))
+
+
+@pytest.mark.integration
+def test_realms_endpoint(openid_connection_admin):
+    adm = KeycloakAdmin.create(connection=openid_connection_admin)
+
+    assert len(adm.realms.get()) == 2
+    assert adm.get() == adm.realms(constants.MASTER_REALM).get()

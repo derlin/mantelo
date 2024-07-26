@@ -119,6 +119,7 @@ class KeycloakAdmin(slumber.API, HyphenatedResource):
         """
         :getter: Get the current realm name.
         :setter: Set the realm name. This updates the :attr:`base_url` and impact all future requests.
+        :seealso: :attr:`realms`
         """
         return self._store["base_url"].split("/realms/")[1]
 
@@ -126,6 +127,32 @@ class KeycloakAdmin(slumber.API, HyphenatedResource):
     def realm_name(self, realm_name: str) -> None:
         base_url = self._store["base_url"].split("/realms/")[0]
         self._store["base_url"] = f"{base_url}/realms/{realm_name}"
+
+    @property
+    def realms(self, **kwargs) -> HyphenatedResource:
+        """
+        Special resource to interact with the ``/admin/realms/`` endpoint.
+
+        By default, the client base URL contains a realm name, making it impossible to query the
+        ``/admin/realms/`` endpoint. This special property allows you to start the URL at ``/realms/``
+        instead of ``/realms/{realm_name}``.
+
+        Some example usages:
+
+        .. code-block:: python
+
+            # List all realms
+            client.realms.get()
+            # Get users in another realm
+            client.realms("test").users.get()
+            # Get users in the current realm
+            client.get() == client.realms(client.realm_name).get()
+
+        """
+        kwargs = dict(self._store.items())
+        base_url = self._store["base_url"].split("/realms/")[0]
+        kwargs.update({"base_url": f"{base_url}/realms/"})
+        return self._get_resource(**kwargs)
 
     @classmethod
     def create(
