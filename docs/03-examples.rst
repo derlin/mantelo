@@ -86,3 +86,64 @@ List and count resources
     # Count the active sessions for a client
     >>> client.clients(c_uid).session_count.get()
     {'count': 0}
+
+
+Interact with realms directly
+-----------------------------
+
+If you need to view or edit properties of the current realm (``/admin/realm/{realm}`` endpoint), you can use the client directly:
+
+.. doctest::
+
+        # Describe the current realm
+        >>> client.get()
+        {'id': ..., 'realm': 'master', 'displayName': ..., ...}
+
+        # Update the realm
+        >>> client.put({"displayName": "MASTER!"})
+
+You can at any point change the realm of the client by setting the
+:py:attr:`~.KeycloakAdmin.realm_name`. This won't impact the connection, which will still use the
+same token. This is useful when you want to definitely switch to another realm. If you only need to
+do a few operations in another realm, consider using the :py:attr:`~.KeycloakAdmin.realms` instead
+(keep reading).
+
+.. doctest::
+
+    >>> client.get()["realm"]
+    'master'
+
+    # Change the realm
+    >>> client.realm_name = "orwell"
+
+    # Describe the current realm
+    >>> client.get()["realm"]
+    'orwell'
+
+    # Switch back to the original realm
+    >>> client.realm_name = "master"
+
+To work with the ``/admin/realms/`` endpoint directly, for example, to list existing realms or create a new one,
+or simply to quickly query another realm's information, use the special `~.KeycloakAdmin.realms` attribute:
+
+.. doctest::
+
+    # List all realms
+    >>> len(client.realms.get())
+    2
+
+    # Create a new realm
+    >>> client.realms.post({"realm": "new_realm", "enabled": True, "displayName": "New Realm"})
+    b''
+
+    # Get the new realm
+    >>> client.realms("new_realm").get()
+    {'id': ..., 'realm': 'new_realm', 'displayName': 'New Realm', ...}
+
+    # Query the users in the new realm
+    >>> client.realms("new_realm").users.get()
+    []
+
+    # Delete the new realm
+    >>> client.realms("new_realm").delete()
+    True

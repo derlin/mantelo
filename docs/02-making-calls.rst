@@ -8,6 +8,9 @@
 📡 Making calls
 ===============
 
+General overview
+----------------
+
 Once you have configured how to authenticate to Keycloak, the rest is easy-peasy. mantelo **starts
 with the URL** ``<server-url>/admin/realms/<realm-name>`` and constructs the URL from there,
 depending on how you call the client.
@@ -70,3 +73,28 @@ To better understand, here are some examples of URL mapping (``c`` is the
 
     > Content-Type: application/json
     > {"username": ...}
+
+Special case: working with realms
+---------------------------------
+
+
+By default, a client is bound to a realm, and has the base URL set to
+``<server-url>/admin/realms/<realm-name>``. Hence, to query ``GET /admin/realms/<realm-name>``, you
+can use :python:`c.get()` directly (or :python:`c.post({})` to update its properties).
+
+.. important::
+
+    Be careful not to delete the realm you used for authentication, as it will invalidate your token!
+    :python:`c.delete()` should be avoided if you used the same realm for connection and the client.
+
+Remember that you can switch the realm by setting the :py:attr:`~.KeycloakAdmin.realm_name`
+attribute. This will only change the base URL (the result of the calls), not the connection itself.
+You will stay logged in to the initial realm you connected with.
+
+If you want to work with the ``/realms/`` endpoint itself, for instance, to list all realms, or
+create a new one, you can use the special :py:attr:`~.KeycloakAdmin.realms` attribute on the client.
+It returns a slumber resource whose base URL is ``<server-url>/admin/realms`` (without any realm
+name). The same rules apply as for the other resources, but the URL is now relative to the
+``/realms/`` endpoint. For example, you can list realms with :python:`c.realms.get()`.
+
+See :ref:`examples` for more hands-on examples.
