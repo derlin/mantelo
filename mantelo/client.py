@@ -54,7 +54,7 @@ class BearerAuth(requests.auth.AuthBase):
         return r
 
 
-class KeycloakAdmin(HyphenatedResourceMixin, slumber.API):
+class KeycloakAdmin(slumber.API, HyphenatedResource):
     """
     A client to interact with the Keycloak Admin API.
 
