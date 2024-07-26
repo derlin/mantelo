@@ -28,6 +28,7 @@ the excellent `slumber <https://slumber.readthedocs.io/>`_ library.
    00-getting_started
    01-authentication
    02-making-calls
+   03-examples
    90-api
 
 -------------------

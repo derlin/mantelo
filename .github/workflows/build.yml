@@ -37,6 +37,9 @@ jobs:
       - name: Build
         run: make build
 
+      - name: Test docs
+        run: make docs-test
+
       - name: Build docs
         run: make docs
 
@@ -65,3 +68,4 @@ jobs:
           path: |
             dist/*.*
             docs/_build/html
+            docs/_build/doctest

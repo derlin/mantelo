@@ -29,6 +29,7 @@ extensions = [
     "autoapi.extension",
     "sphinx_copybutton",
     "sphinxext.opengraph",
+    "sphinx.ext.doctest",
 ]
 
 autoapi_type = "python"

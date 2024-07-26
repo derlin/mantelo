@@ -24,6 +24,10 @@ docs-clean: ## Remove docs build artifacts.
 docs-open: ## Open the documentation locally (requires make docs to have ran).
 	open docs/_build/html/index.html
 
+docs-test: ## Test the documentation code snippets.
+	docker compose up -d --wait keycloak
+	cd docs && make doctest
+
 ##@ Development
 
 lint: ## Run ruff to format and lint (inside docker).
