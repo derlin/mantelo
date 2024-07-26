@@ -16,7 +16,7 @@ from .exceptions import HttpException
 __all__ = ["KeycloakAdmin", "BearerAuth"]
 
 
-class HypenatedResourceMixin(slumber.ResourceAttributesMixin):
+class HyphenatedResourceMixin(slumber.ResourceAttributesMixin):
     """A mixin replacing underscores in attribute names with hyphens in the URL."""
 
     def __getattr__(self, item):
@@ -25,7 +25,7 @@ class HypenatedResourceMixin(slumber.ResourceAttributesMixin):
         return super().__getattr__(item.replace("_", "-"))
 
 
-class HypenatedResource(HypenatedResourceMixin, slumber.Resource):
+class HyphenatedResource(HyphenatedResourceMixin, slumber.Resource):
     """A resource replacing underscores in attribute names with hyphens in the URL."""
 
     def _request(self, *args, **kwargs):
@@ -54,7 +54,7 @@ class BearerAuth(requests.auth.AuthBase):
         return r
 
 
-class KeycloakAdmin(HypenatedResourceMixin, slumber.API):
+class KeycloakAdmin(HyphenatedResourceMixin, slumber.API):
     """
     A client to interact with the Keycloak Admin API.
 
@@ -78,7 +78,7 @@ class KeycloakAdmin(HypenatedResourceMixin, slumber.API):
     :type session: requests.Session, optional
     """
 
-    resource_class = HypenatedResource
+    resource_class = HyphenatedResource
 
     def __init__(
         self,
