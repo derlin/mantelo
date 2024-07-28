@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.1.0](https://github.com/derlin/mantelo/compare/v2.0.0...v2.1.0) (2024-07-28)
+
+
+### 🚀 Features
+
+* add realms property ([84da9e7](https://github.com/derlin/mantelo/commit/84da9e749cc76b194a1c72ea60753665606600f7))
+
+
+### 🐛 Bug Fixes
+
+* add response object to AuthenticationException ([feccdeb](https://github.com/derlin/mantelo/commit/feccdeb9773280a4cb8802ec3e280b7b185764ef))
+* make it possible to query the current realm ([67c2b45](https://github.com/derlin/mantelo/commit/67c2b45bc423d238f08a4d808a1cd99d437aa952))
+
+
+### 💬 Documentation
+
+* add more examples ([b801ade](https://github.com/derlin/mantelo/commit/b801ade831569f396f17f265110c3b7abcada31f))
+* add opengraph meta ([0310e41](https://github.com/derlin/mantelo/commit/0310e41f87b18f844ba4a140ddc944dfb484baf2))
+* add readthedocs documentation ([04cc4d7](https://github.com/derlin/mantelo/commit/04cc4d70f3baf91050d4eecda2889b381944b820))
+* fix an rst link ([a7ae889](https://github.com/derlin/mantelo/commit/a7ae889611f7a31f2af7120423711c04c535e5b2))
+
+
+### 🦀 Build and CI
+
+* fix failing healthcheck after keycloak update ([890f416](https://github.com/derlin/mantelo/commit/890f41686717809331c1c3b5f6123f5ab4261b5d))
+* fix weekly build ([783aad4](https://github.com/derlin/mantelo/commit/783aad46a9632fe139dd820bfcd1f55a45986250))
+* run tests weekly ([bbbc54d](https://github.com/derlin/mantelo/commit/bbbc54d9bc7eba84a440836a7e38cb18c7e572a6))
+
 ## [2.0.0](https://github.com/derlin/mantelo/compare/v1.0.1...v2.0.0) (2024-03-21)
 
 
