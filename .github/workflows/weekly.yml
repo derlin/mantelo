@@ -18,7 +18,7 @@ jobs:
           python-version: 3.12
 
       - name: Install package
-        run: pip install -e .[dev]
+        run: pip install -e .[dev,docs]
 
       - name: Install make
         run: sudo apt update && sudo apt -y --no-install-recommends install make
