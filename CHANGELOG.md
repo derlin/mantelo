@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/derlin/mantelo/compare/v2.1.0...v2.1.1) (2024-10-06)
+
+
+### 🐛 Bug Fixes
+
+* unset ADMIN variables ([5bf2263](https://github.com/derlin/mantelo/commit/5bf226327337c09e58368ffba1b720cac6dc5ea8))
+
 ## [2.1.0](https://github.com/derlin/mantelo/compare/v2.0.0...v2.1.0) (2024-07-28)
 
 
