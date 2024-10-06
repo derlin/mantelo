@@ -5,8 +5,9 @@ services:
     ports:
       - 9090:8080
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      # The admin user will be created during realm import
+      #KEYCLOAK_ADMIN: admin
+      #KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HEALTH_ENABLED: true
     volumes:
       - ./tests/realms:/opt/keycloak/data/import
