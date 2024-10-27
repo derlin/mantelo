@@ -5,6 +5,8 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Avoid duplicate runs
+    if: github.event_name == 'push' || (github.event.name == 'pull_request' && github.event.pull_request.head.repo.fork)
     steps:
       - uses: actions/checkout@v4
 
