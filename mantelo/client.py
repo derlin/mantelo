@@ -28,11 +28,24 @@ class HyphenatedResourceMixin(slumber.ResourceAttributesMixin):
 class HyphenatedResource(HyphenatedResourceMixin, slumber.Resource):
     """A resource replacing underscores in attribute names with hyphens in the URL."""
 
-    def _request(self, *args, **kwargs):
+    def _request(self, method, data=None, files=None, params=None):
+        self._return_raw = (params or {}).pop("return_raw_response", False)
         try:
-            return slumber.Resource._request(self, *args, **kwargs)
+            return slumber.Resource._request(self, method, data, files, params)
         except SlumberHttpBaseException as ex:
             raise HttpException.from_slumber_exception(ex) from None
+
+    def _process_response(self, resp):
+        if self._return_raw:
+            return resp
+        return super()._process_response(resp)
+
+    def delete(self, **kwargs):
+        # Delete doesn't call _process_response but returns a boolean in slumber
+        self._return_raw = (kwargs or {}).pop("return_raw_response", False)
+        if self._return_raw:
+            return self._request("DELETE", params=kwargs)
+        return super().delete(**kwargs)
 
 
 @define

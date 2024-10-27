@@ -1,9 +1,14 @@
+import re
+from uuid import uuid4
+
 import pytest
-from . import constants
+import requests
+
 from mantelo import KeycloakAdmin
 from mantelo.client import BearerAuth
 from mantelo.exceptions import HttpException
-import requests
+
+from . import constants
 
 
 @pytest.mark.integration
@@ -170,14 +175,40 @@ def test_resource_private(openid_connection_password):
         adm._users.get()
 
 
+@pytest.mark.integration
+def test_return_raw(openid_connection_password):
+    adm = KeycloakAdmin.create(connection=openid_connection_password)
+
+    # Keycloak endpoint return 405 for HEAF
+    # resp = adm.groups.head(return_raw_response=True)
+    # assert isinstance(resp, requests.Response)
+
+    resp = adm.groups.get(return_raw_response=True)
+    assert isinstance(resp, requests.Response)
+
+    resp = adm.groups.post({"name": str(uuid4())}, return_raw_response=True)
+    assert isinstance(resp, requests.Response)
+    uuid = resp.headers["Location"].split("/")[-1]
+
+    resp = adm.groups(uuid).management.permissions.put(
+        {}, return_raw_response=True
+    )
+    assert isinstance(resp, requests.Response)
+
+    resp = adm.groups(uuid).delete(return_raw_response=True)
+    assert isinstance(resp, requests.Response)
+
+
 def test_client_as_resource():
     adm = KeycloakAdmin(server_url="any", realm_name="any", auth=object)
 
     # Ensure the client itself defines the get, etc operations
     # (to query /admin/realms/{realm_name}/)
     for op in ["head", "get", "post", "put", "delete"]:
-        assert hasattr(adm.clients, op)
-        assert f"bound method Resource.{op}" in str(getattr(adm, op))
+        assert hasattr(adm, op)
+        assert re.fullmatch(
+            f"<bound method .*Resource\\.{op} of .*>", str(getattr(adm, op))
+        )
 
 
 @pytest.mark.integration
