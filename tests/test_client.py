@@ -116,6 +116,7 @@ def test_switch_realm(openid_connection_admin):
         (403, lambda c: c.clients.get()),
         (400, lambda c: c.users.post({"foo": "bar"})),
         (400, lambda c: c.users.post({})),
+        (405, lambda c: c.groups.head()),
         (405, lambda c: c.users.put({})),
         (404, lambda c: c.users("not-exist").get()),
         (
@@ -140,7 +141,7 @@ def test_exceptions(openid_connection_password, status, op):
     ex = excinfo.value
     assert ex.status_code == status
     assert ex.url.startswith(constants.TEST_SERVER_URL)
-    assert ex.json and isinstance(ex.json, dict)
+    assert isinstance(ex.json, dict)
     assert isinstance(ex.response, requests.Response)
 
 

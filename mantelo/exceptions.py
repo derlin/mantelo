@@ -25,7 +25,7 @@ class HttpException(Exception):
 
     status_code: int
     """The HTTP status code."""
-    json: str
+    json: dict
     """The JSON response from the server."""
     url: str
     """The URL that was requested."""
@@ -38,6 +38,6 @@ class HttpException(Exception):
         return cls(
             url=ex.response.request.url,
             status_code=ex.response.status_code,
-            json=ex.response.json(),
+            json=ex.response.json() if ex.response.content else {},
             response=ex.response,
         )
