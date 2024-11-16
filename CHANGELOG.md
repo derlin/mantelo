@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.1.1](https://github.com/derlin/mantelo/compare/v2.1.0...v2.1.1) (2024-11-16)
+
+
+### 🐛 Bug Fixes
+
+* make HttpException handle response with no body properly ([ea4d4b7](https://github.com/derlin/mantelo/commit/ea4d4b7edbf724075c4d4257036ecdb0967cf9d4))
+* unset ADMIN variables ([5bf2263](https://github.com/derlin/mantelo/commit/5bf226327337c09e58368ffba1b720cac6dc5ea8))
+
+
+### 💬 Documentation
+
+* add a FAQ page in readthedocs ([88ba664](https://github.com/derlin/mantelo/commit/88ba664b41e26fc85f879bfd852ada95565ae238))
+
+
+### 🦀 Build and CI
+
+* avoid duplicate runs ([838d64c](https://github.com/derlin/mantelo/commit/838d64cd9143f30a106f9aa0599c84f326631ffe))
+
 ## [2.1.0](https://github.com/derlin/mantelo/compare/v2.0.0...v2.1.0) (2024-07-28)
 
 
