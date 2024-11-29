@@ -2,6 +2,7 @@
 
 [![codecov](https://codecov.io/gh/derlin/mantelo/graph/badge.svg?token=5Y2O7B7342)](https://codecov.io/gh/derlin/mantelo)
 [![PyPI](https://img.shields.io/pypi/v/mantelo)](https://pypi.org/project/mantelo/)
+![PyPI Downloads](https://static.pepy.tech/badge/mantelo)
 [![Documentation Status](https://readthedocs.org/projects/mantelo/badge/?version=latest)](https://mantelo.readthedocs.io/en/latest/?badge=latest)
 ---
 
