@@ -33,6 +33,27 @@ The ``kwargs`` are used to add query parameters to the URL. The ``data`` and ``f
 are used to add a payload to the request. See :py:meth:`requests.Session.request` for more
 information on the allowed values for these parameters.
 
+.. note::
+
+    If you have a doubt or want to play with the URL mapping behavior without doing any real call,
+    use the special method ``.url()``. It will return the translated URL, with no side effect!
+
+    Spin up a Python shell and try it out right now:
+
+    .. testcode::
+
+        from mantelo import KeycloakAdmin
+        c = KeycloakAdmin("https://invalid.com", "my-realm", None)
+        url = c.just_trying.some("mapping").url()
+        print(url)
+
+    Yields:
+
+    .. testoutput::
+
+        https://invalid.com/admin/realms/my-realm/just-trying/some/mapping
+
+    (Parameters themselves are handled by :py:mod:`requests`).
 
 To better understand, here are some examples of URL mapping (``c`` is the
 :py:class:`~.KeycloakAdmin` object):
@@ -74,9 +95,29 @@ To better understand, here are some examples of URL mapping (``c`` is the
     > Content-Type: application/json
     > {"username": ...}
 
+About dashes
+------------
+
+Since Python doesn't allow dashes in method names, but Keycloak URLs use them in some places,
+Mantelo automatically converts any underscores in method names to dashes in the URL.
+
+In other words, to call:
+
+.. code-block:: none
+
+    GET /admin/realms/{realm}/client-scopes
+
+You can use:
+
+.. code-block:: python
+
+    c.client_scopes.get()
+
+Note that you could also use ``c("client-scopes").get()``, but let's admit it, it is ugly (so
+don't).
+
 Special case: working with realms
 ---------------------------------
-
 
 By default, a client is bound to a realm, and has the base URL set to
 ``<server-url>/admin/realms/<realm-name>``. Hence, to query ``GET /admin/realms/<realm-name>``, you
