@@ -12,10 +12,10 @@ Mantelo: A Keycloak Admin REST Api Client for Python
 
 It stays always **fresh** and **complete** because it does not implement or wrap any endpoint.
 Instead, it offers an object-oriented interface to the Keycloak ReSTful API. Acting as a wrapper
-around the well-known `requests <https://requests.readthedocs.io/en/latest/>`_ library and using
-slumber under the hood, it abstracts all the boring stuff such as authentication (tokens and refresh
-tokens), URL handling, serialization, and the processing of requests. This magic is made possible by
-the excellent `slumber <https://slumber.readthedocs.io/>`_ library.
+around the well-known `requests <https://requests.readthedocs.io/en/latest/>`_ library, it abstracts
+all the boring stuff such as authentication (tokens and refresh tokens), URL handling,
+serialization, and the processing of requests. This magic is made possible by the excellent
+`slumber <https://slumber.readthedocs.io/>`_ library.
 
 ⮕ Any endpoint your Keycloak supports, mantelo supports!
 
