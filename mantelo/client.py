@@ -1,38 +1,17 @@
 from collections.abc import Callable
 
 import requests
-import slumber
-from attrs import define
-from slumber.exceptions import SlumberHttpBaseException
+from attrs import define, evolve
 
 from .connection import (
     ClientCredentialsConnection,
     OpenidConnection,
     UsernamePasswordConnection,
 )
-from .exceptions import HttpException
+from .internal.api import API, Resource
 
 
-__all__ = ["KeycloakAdmin", "BearerAuth"]
-
-
-class HyphenatedResourceMixin(slumber.ResourceAttributesMixin):
-    """A mixin replacing underscores in attribute names with hyphens in the URL."""
-
-    def __getattr__(self, item):
-        if item.startswith("_"):
-            raise AttributeError(item)
-        return super().__getattr__(item.replace("_", "-"))
-
-
-class HyphenatedResource(HyphenatedResourceMixin, slumber.Resource):
-    """A resource replacing underscores in attribute names with hyphens in the URL."""
-
-    def _request(self, *args, **kwargs):
-        try:
-            return slumber.Resource._request(self, *args, **kwargs)
-        except SlumberHttpBaseException as ex:
-            raise HttpException.from_slumber_exception(ex) from None
+__all__ = ["BearerAuth", "KeycloakAdmin"]
 
 
 @define
@@ -54,13 +33,13 @@ class BearerAuth(requests.auth.AuthBase):
         return r
 
 
-class KeycloakAdmin(slumber.API, HyphenatedResource):
+class KeycloakAdmin(API):
     """
     A client to interact with the Keycloak Admin API.
 
-    KeycloakAdmin is a thin wrapper around the
-    `slumber <https://slumber.readthedocs.io/en/stable/>`_ library, providing a more Pythonic
-    interface to the Keycloak Admin API.
+    Highly inspired by the awesome `slumber <https://slumber.readthedocs.io/en/stable/>`_ library,
+    KeycloakAdmin is a lightweight object offering a more Pythonic interface to the Keycloak Admin
+    API.
 
     The authentication is handled by the a subclass of :class:`requests.auth.AuthBase`. Use the
     class methods such as :func:`from_client_credentials` or :func:`from_username_password` to
@@ -77,8 +56,6 @@ class KeycloakAdmin(slumber.API, HyphenatedResource):
         Note that `auth` will be overridden, as well as some headers (e.g. `Accept` and `Content-Type`).
     :type session: requests.Session, optional
     """
-
-    resource_class = HyphenatedResource
 
     def __init__(
         self,
@@ -102,7 +79,7 @@ class KeycloakAdmin(slumber.API, HyphenatedResource):
         :getter: Get the session.
         :type: requests.Session
         """
-        return self._store["session"]
+        return self._store.session
 
     @property
     def base_url(self) -> str:
@@ -112,7 +89,7 @@ class KeycloakAdmin(slumber.API, HyphenatedResource):
         :getter: Get the base_url.
         :type: string
         """
-        return self._store["base_url"]
+        return self._store.base_url
 
     @property
     def realm_name(self) -> str:
@@ -121,15 +98,17 @@ class KeycloakAdmin(slumber.API, HyphenatedResource):
         :setter: Set the realm name. This updates the :attr:`base_url` and impact all future requests.
         :seealso: :attr:`realms`
         """
-        return self._store["base_url"].split("/realms/")[1]
+        return self._store.base_url.split("/realms/")[1]
 
     @realm_name.setter
     def realm_name(self, realm_name: str) -> None:
-        base_url = self._store["base_url"].split("/realms/")[0]
-        self._store["base_url"] = f"{base_url}/realms/{realm_name}"
+        base_url = self._store.base_url.split("/realms/")[0]
+        self._store = evolve(
+            self._store, base_url=f"{base_url}/realms/{realm_name}"
+        )
 
     @property
-    def realms(self, **kwargs) -> HyphenatedResource:
+    def realms(self, **kwargs) -> Resource:
         """
         Special resource to interact with the ``/admin/realms/`` endpoint.
 
@@ -149,10 +128,10 @@ class KeycloakAdmin(slumber.API, HyphenatedResource):
             client.get() == client.realms(client.realm_name).get()
 
         """
-        kwargs = dict(self._store.items())
-        base_url = self._store["base_url"].split("/realms/")[0]
-        kwargs.update({"base_url": f"{base_url}/realms/"})
-        return self._get_resource(**kwargs)
+        base_url = self._store.base_url.split("/realms/")[0]
+        return self._get_resource(
+            evolve(self._store, base_url=f"{base_url}/realms/")
+        )
 
     @classmethod
     def create(

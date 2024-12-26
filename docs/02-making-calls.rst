@@ -18,8 +18,9 @@ depending on how you call the client.
 The return value is the HTTP response content as a :python:`dict` (parsed from the JSON response). In
 case of error, an :py:class:`~.HttpException` with access to the raw response is available.
 
-All the calls in the chain are used to generate the URL, except for the last call which determines the HTTP method to use.
-Supported HTTP methods are:
+All the calls in the chain are used to generate the URL, except for the last call which determines
+the HTTP method to use. Supported HTTP methods are (see :py:class:`~.Resource` for more
+information):
 
 * :python:`.get(**kwargs)`
 * :python:`.options(**kwargs)`
@@ -29,8 +30,8 @@ Supported HTTP methods are:
 * :python:`.put(data=None, files=None, **kwargs)`
 * :python:`.delete(**kwargs)`
 
-The ``kwargs`` are used to add query parameters to the URL. The ``data`` and ``files`` parameters
-are used to add a payload to the request. See :py:meth:`requests.Session.request` for more
+The ``kwargs`` can be used to add query parameters to the URL. The ``data`` and ``files`` parameters
+can be used to add a payload to the request. See :py:meth:`requests.Session.request` for more
 information on the allowed values for these parameters.
 
 .. note::
@@ -115,6 +116,27 @@ You can use:
 
 Note that you could also use ``c("client-scopes").get()``, but let's admit it, it is ugly (so
 don't).
+
+About the return type of HTTP calls
+-----------------------------------
+
+HTTP calls return the JSON response as a Python dictionary, with the following exceptions:
+
+1. When the HTTP method is ``DELETE``, the return value is a boolean indicating success (2xx status
+   code) or failure (other status codes).
+2. When the response is empty, the return value is an empty string, to match :py:mod:`requests` behavior.
+3. When the content-type of the response doesn't match a JSON content-type, mantelo returns the
+   response text as a string, or the raw bytes if the body can not be decoded. It does not
+   attempt any parsing.
+
+In case of error, an :py:class:`~.HttpException` is raised, with the raw response available in the 
+:py:attr:`~HttpException.response` attribute.
+
+Finally, there may be times when you need to access the raw response object. For this, use the
+:py:meth:`~.Resource.as_raw` method anywhere in the chain. This will make mantelo return a tuple
+instead, with the raw :py:class:`requests.Response` as the first element. The second element is
+the decoded content, and follow the same rules as laid above.
+
 
 Special case: working with realms
 ---------------------------------

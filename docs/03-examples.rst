@@ -9,8 +9,10 @@
 📓 Examples
 ===========
 
-Assuming you created a client (see :ref:`authentication`), here are some examples of how to interact with the Keycloak Admin API using Mantelo.
-Don't hesitate to create an `issue <https://github.com/derlin/mantelo/issues/new/choose>`_ if you want to see more examples or if you have any questions.
+Assuming you created a client (see :ref:`authentication`), here are some examples of how to interact
+with the Keycloak Admin API using Mantelo. Don't hesitate to create an
+`issue <https://github.com/derlin/mantelo/issues/new/choose>`_ if you want to see more examples or
+if you have any questions.
 
 Create, update, and delete a user
 ---------------------------------
@@ -39,7 +41,7 @@ Create, update, and delete a user
     ...    "enabled": True,
     ...    "emailVerified": True,
     ... })
-    b''
+    ''
 
     # Get the ID of the newly created user
     >>> user_id = client.users.get(username="test_user")[0]["id"]
@@ -49,6 +51,7 @@ Create, update, and delete a user
 
     # Add some password credentials
     >>> client.users(user_id).put({"credentials": [{"type": "password", "value": "CHANGE_ME"}]})
+    ''
 
     >>> client.users(user_id).credentials.get()
     [{'id': ..., 'type': 'password', 'createdDate': ..., 'credentialData': ...}]
@@ -91,7 +94,8 @@ List and count resources
 Interact with realms directly
 -----------------------------
 
-If you need to view or edit properties of the current realm (``/admin/realm/{realm}`` endpoint), you can use the client directly:
+If you need to view or edit properties of the current realm (``/admin/realm/{realm}`` endpoint), you
+can use the client directly:
 
 .. doctest::
 
@@ -101,10 +105,11 @@ If you need to view or edit properties of the current realm (``/admin/realm/{rea
 
         # Update the realm
         >>> client.put({"displayName": "MASTER!"})
+        ''
 
 You can at any point change the realm of the client by setting the
 :py:attr:`~.KeycloakAdmin.realm_name`. This won't impact the connection, which will still use the
-same token. This is useful when you want to definitely switch to another realm. If you only need to
+same token. This is useful when you want to switch to another realm definitely. If you only need to
 do a few operations in another realm, consider using the :py:attr:`~.KeycloakAdmin.realms` instead
 (keep reading).
 
@@ -134,7 +139,7 @@ or simply to quickly query another realm's information, use the special `~.Keycl
 
     # Create a new realm
     >>> client.realms.post({"realm": "new_realm", "enabled": True, "displayName": "New Realm"})
-    b''
+    ''
 
     # Get the new realm
     >>> client.realms("new_realm").get()
