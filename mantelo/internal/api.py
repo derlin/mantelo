@@ -428,5 +428,5 @@ class API(Resource):
             raw=raw,
         )
 
-    def _get_resource(self, *args: Any, **kwargs: Any):
+    def _get_resource(self, *args: Any, **kwargs: Any) -> "Resource":
         return self._resource_class(*args, **kwargs)

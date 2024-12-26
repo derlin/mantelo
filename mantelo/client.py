@@ -28,7 +28,9 @@ class BearerAuth(requests.auth.AuthBase):
     token_getter: Callable[[], str]
     """The callable that returns the token to use for authentication."""
 
-    def __call__(self, r):
+    def __call__(
+        self, r: requests.PreparedRequest
+    ) -> requests.PreparedRequest:
         r.headers["Authorization"] = f"Bearer {self.token_getter()}"
         return r
 
@@ -108,7 +110,7 @@ class KeycloakAdmin(API):
         )
 
     @property
-    def realms(self, **kwargs) -> Resource:
+    def realms(self) -> Resource:
         """
         Special resource to interact with the ``/admin/realms/`` endpoint.
 

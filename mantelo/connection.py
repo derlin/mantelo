@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from collections.abc import Callable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
+from typing import Any
 
 import requests
 from attrs import Factory, define, field, frozen
@@ -22,7 +23,7 @@ _NO_AUTH = lambda r: r  # noqa: E731
 #   converter=default_if_none(timedelta(seconds=30)),
 #   converter=default_if_none(Factory(requests.Session)),
 #
-def _session_if_none_converter(value) -> requests.Session:
+def _session_if_none_converter(value: Any) -> requests.Session:
     if value is None:
         return requests.Session()
     assert isinstance(value, requests.Session)
@@ -35,7 +36,7 @@ def _timedelta_if_none_converter(value: timedelta | None) -> timedelta:
     return value
 
 
-def _utcnow():
+def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
 
 
@@ -85,7 +86,7 @@ class Token:
     created_at: datetime = field(default=Factory(_utcnow))
     """The time at which the token was created."""
 
-    def __attrs_post_init__(self):
+    def __attrs_post_init__(self) -> None:
         if self.refresh_token and not self.refresh_expires_in:
             raise TypeError("Missing refresh_expires_in.")
 
