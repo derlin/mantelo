@@ -44,6 +44,9 @@ test: ## Run tests with tox (inside docker).
 mypy: ## Run mypy locally to check types.
 	mypy mantelo
 
+mypy-strict: ## Run mypy locally and print all missing annotations.
+	mypy --disallow-untyped-calls --disallow-untyped-defs --disallow-incomplete-defs mantelo
+
 export-realms: ## Export test realms after changes in Keycloak Test Server.
 	docker compose exec keycloak /opt/keycloak/bin/kc.sh export --dir /tmp/export --users realm_file; \
     for realm in master orwell; do \

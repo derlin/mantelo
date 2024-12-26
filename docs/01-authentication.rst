@@ -9,15 +9,14 @@
 ==============================
 
 To authenticate to Keycloak, you can either use a username+password, or client credentials (client
-ID+client secret, also known as service account).
+ID+client secret, also known as *service account*).
 
 The library takes care of fetching a token the first time you need it and keeping it fresh. By
 default, it tries to use the refresh token (if available) and always guarantees the token is valid
-for the next 30s.
+for the next 30 seconds.
 
-The authentication calls and the calls to the REST API are using the same
-:py:class:`requests.Session`, that can be passed at creation in case you need to add custom headers,
-proxies, etc.
+The authentication calls and the calls to the REST API use the same :py:class:`requests.Session`,
+which can be passed at creation in case you need to add custom headers, proxies, etc.
 
 .. important::
 
@@ -37,7 +36,7 @@ testing, you can either use the admin user (not recommended) or create a user an
 
 .. hint::
 
-    Clients need to enable the "*Direct access grants*" authorization flow.
+    Clients must enable the "*Direct access grants*" authorization flow.
     The client ``admin-cli``, which exists by default on all realms, is often used.
 
 Here is how to use :py:meth:`~.KeycloakAdmin.from_username_password` connect to the default realm

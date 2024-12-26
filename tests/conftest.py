@@ -1,9 +1,15 @@
-from mantelo.connection import (
-    UsernamePasswordConnection,
-    ClientCredentialsConnection,
-)
-from . import constants
+from unittest.mock import MagicMock
+
 import pytest
+
+from mantelo.internal import serializers
+from mantelo.connection import (
+    ClientCredentialsConnection,
+    UsernamePasswordConnection,
+)
+from mantelo.internal import api
+
+from . import constants
 
 
 @pytest.fixture()
@@ -35,4 +41,26 @@ def openid_connection_admin():
         client_id=constants.ADMIN_CLI_CLIENT,
         username=constants.TEST_MASTER_USER,
         password=constants.TEST_MASTER_PASSWORD,
+    )
+
+
+@pytest.fixture()
+def mock_session():
+    session = MagicMock()
+    session.request.return_value = MagicMock(status_code=200)
+    for session_method in ["get", "post", "put", "delete"]:
+        getattr(
+            session, session_method
+        ).return_value = session.request.return_value
+    return session
+
+
+@pytest.fixture()
+def mock_store(mock_session):
+    return api.Store(
+        base_url="https://example.com",
+        serializers=[serializers.JsonSerializer()],
+        session=mock_session,
+        append_slash=False,
+        raw=False,
     )
