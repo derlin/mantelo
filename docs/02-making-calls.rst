@@ -28,7 +28,7 @@ information):
 * :python:`.post(data=None, files=None, **kwargs)`
 * :python:`.patch(data=None, files=None, **kwargs)`
 * :python:`.put(data=None, files=None, **kwargs)`
-* :python:`.delete(**kwargs)`
+* :python:`.delete(data=None, files=None, **kwargs)`
 
 The ``kwargs`` can be used to add query parameters to the URL. The ``data`` and ``files`` parameters
 can be used to add a payload to the request. See :py:meth:`requests.Session.request` for more

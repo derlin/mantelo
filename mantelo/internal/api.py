@@ -328,15 +328,25 @@ class Resource:
             "PUT", data=data, files=files, params=kwargs
         )
 
-    def delete(self, **kwargs: Any) -> bool | tuple[requests.Response, bool]:
+    def delete(
+        self,
+        data: dict | None = None,
+        files: dict | None = None,
+        **kwargs: Any,
+    ) -> bool | tuple[requests.Response, bool]:
         """
         Do a DELETE request.
+        Parameters are the same as :func:`post`.
 
-        :param kwargs: The query parameters to send with the request.
+        *Note*: some APIs such as the Keycloak Admin REST Api do not follow the HTTP spec and expect
+        a body in the request (e.g.
+        ``DELETE /admin/realms/{realm}/users/{user-id}/role-mappings/clients/{client-id}``).
+
+
         :return: True if the request was successful, False for 3xx status codes.
         :rtype: bool
         """
-        resp = self._request("DELETE", params=kwargs)
+        resp = self._request("DELETE", data=data, files=files, params=kwargs)
         # TODO: isn't this stupid?
         # The only other possible statues are 3xx...
         response = 200 <= resp.status_code <= 299
