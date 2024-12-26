@@ -363,9 +363,11 @@ def test_resource_delete(mock_store, raw, status_code, expected):
     resource = _api.Resource(mock_store.evolve(raw=raw))
     resource._request = Mock(return_value=mock_response)
 
-    response = resource.delete(foo="bar")
+    response = resource.delete(data="data", files="files", foo="bar")
 
-    resource._request.assert_called_with("DELETE", params={"foo": "bar"})
+    resource._request.assert_called_with(
+        "DELETE", data="data", files="files", params={"foo": "bar"}
+    )
 
     if raw:
         assert response == (mock_response, expected)
