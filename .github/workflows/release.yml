@@ -14,11 +14,10 @@ jobs:
       release_created: ${{ steps.rp.outputs.release_created }}
       tag_name: ${{ steps.rp.outputs.tag_name }}
     steps:
-      - uses: google-github-actions/release-please-action@v3
+      - uses: googleapis/release-please-action@v4
         id: rp
         with:
-          release-type: simple
-          changelog-types: '[{"type":"feat","section":"🚀 Features","hidden":false},{"type":"fix","section":"🐛 Bug Fixes","hidden":false},{"type":"docs","section":"💬 Documentation","hidden":false},{"type":"ci","section":"🦀 Build and CI","hidden":false}, {"type":"style","section":"🌈 Styling","hidden":false}]'
+          config-file: .github/workflows/release-please-config.json
 
   publish:
     runs-on: ubuntu-latest
@@ -58,7 +57,7 @@ jobs:
           verbose: true
 
       - name: Add files to Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.release-please.outputs.tag_name }}
           files: |

@@ -46,7 +46,7 @@ jobs:
         run: make docs
 
       - name: CodeCov
-        uses: codecov/codecov-action@v4.0.1
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: derlin/mantelo
@@ -62,6 +62,7 @@ jobs:
         with:
           name: coverage
           path: .artifacts/
+          include-hidden-files: true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
