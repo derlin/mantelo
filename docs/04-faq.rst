@@ -9,6 +9,21 @@
 📢 FAQ
 ======
 
+.. testsetup:: *
+
+    from mantelo import KeycloakAdmin
+    from uuid import uuid4, UUID
+    import requests
+
+    client = KeycloakAdmin.from_username_password(
+           server_url="http://localhost:9090",
+           realm_name="master",
+           client_id="admin-cli",
+           username="admin",
+           password="admin",
+    )
+
+
 Can I connect to Keycloak if it uses a self-signed certificate?
 ---------------------------------------------------------------
 
@@ -48,47 +63,48 @@ Can I get the raw response object from the server?
 --------------------------------------------------
 
 Getting the raw response is especially useful for some create endpoints that return the UUID of the
-of the created resource only in the headers.
+created resource only in the ``location`` headers.
 
 .. note:: 
     
     When an exception occurs, the raw response is always available in the exception object
     (see :py:attr:`.HttpException.response` attribute).
 
-By default, mantelo always parses the body of the response and returns it as a dictionary. However,
-there is a trick to get the raw response object of any call. In short, every time mantelo does a
-request, it stores the raw response in the special ``_`` attribute of the resource. As long as you
-keep a reference to the object, you can access the last call's raw response.
+By default, mantelo always parses the body of the response and returns it as a dictionary. To change
+this behavior, simply call the :py:meth:`~.Resource.as_raw` method *anywhere* in the chain. This will
+make mantelo return a tuple instead, with the raw :py:class:`requests.Response` as the first
+element. The second element is the decoded content.
 
 To make it clearer, here is an example:
 
-.. code:: python
+.. testcode::
 
-    ## Keep a reference to the endpoint you which to use
-    groups_endpoint = client.groups
+    ## This is the regular behavior
+    decoded = client.groups.get()
 
-    ## Make the call
-    groups_endpoint.post({"name": "my-group"})
+    ## This let you access the raw response
+    (raw_response, decoded) = client.groups.as_raw().get()
 
-    ## You can now access the last response's object via `_` attribute:
-    groups_endpoint._.headers["location"]
-    # 'http://localhost:9090/admin/realms/my-realm/groups/73a2abf9-3797-433f-99c6-304fa4b2c961'
-    groups_endpoint._.request.method
-    # POST
+    assert(isinstance(raw_response, requests.Response))
 
-Note that every time you call e.g. ``client.groups``, you get a new instance. This makes it easy to
-parallelize calls without fear of interference: just use different references. To better understand:
+A good example where this is useful is to get the UUID of the newly created resource,
+as Keycloak currently does not return it but mentions it in the ``location`` header.
 
-.. code:: python
+.. testcode::
 
-    a = client.users
-    b = client.users
+    ## Create a new group
+    (resp, _) = client.as_raw().groups.post({"name": f"my-group-{uuid4()}"})
+    
+    ## get the UUID of the new group from the location header
+    loc = resp.headers["location"]
+    # -> 'http://localhost:9090/admin/realms/my-realm/groups/73a2abf9-3797-433f-99c6-304fa4b2c961'
+    uuid = UUID(loc.split("/")[-1])
+    # -> UUID('73a2abf9-3797-433f-99c6-304fa4b2c961')
 
-    a.get()
-    b.get()
 
-    a._ != b._ # each holds its own raw response object
-    a.get() # this only updates a._, not b._
+Note that the ``as_raw()`` can really be placed anywhere before the final HTTP call, so
+``client.as_raw().groups.get()`` is equivalent to ``client.groups.as_raw().get()``. Choose your
+style!
 
 
 More questions?

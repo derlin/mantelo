@@ -1,9 +1,11 @@
 import pytest
-from . import constants
+import requests
+
 from mantelo import KeycloakAdmin
 from mantelo.client import BearerAuth
 from mantelo.exceptions import HttpException
-import requests
+
+from . import constants
 
 
 @pytest.mark.integration
@@ -122,7 +124,7 @@ def test_switch_realm(openid_connection_admin):
         (
             401,
             lambda c: (
-                setattr(c._store["session"], "auth", None),
+                setattr(c._store.session, "auth", None),
                 c.users.get(),
             )[-1],
         ),

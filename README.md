@@ -291,7 +291,7 @@ HttpException: (403, {'error': 'unknown_error', 'error_description': 'For more o
 
 If the server returns a 401 Unauthorized during the _authentication_ process, mantelo will raise an
 `AuthenticationException` with the `error` and `errorDescription` from Keycloak. All other HTTP
-exceptions are instances of `HttpException`.
+exceptions are instances of `HttpException`, with some subclasses (`HttpNotFound`, `HttpClientError`, `HttpServerError`).
 
 Here are some examples:
 
