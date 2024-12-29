@@ -1,5 +1,30 @@
 # Changelog
 
+## [2.2.0](https://github.com/derlin/mantelo/compare/v2.1.1...v2.2.0) (2024-12-29)
+
+**IMPORTANT**: This release removes the `slumber` dependency and integrates its functionality
+directly into Mantelo. Unless you directly used `slumber` in your code, this change should not
+affect you.
+
+### 🚀 Features
+
+* raise more granular HttpException (HttpNotFound, HttpClientError, HttpServerError) ([33588c8](https://github.com/derlin/mantelo/commit/33588c8b1e3b4962706fc636fc791533b5e8a8ed))
+* remove dependency on Slumber and integrate its functionality into Mantelo ([33588c8](https://github.com/derlin/mantelo/commit/33588c8b1e3b4962706fc636fc791533b5e8a8ed))
+* return an empty string (versus b'' or None) when the body is empty ([33588c8](https://github.com/derlin/mantelo/commit/33588c8b1e3b4962706fc636fc791533b5e8a8ed))
+
+
+### 🐛 Bug Fixes
+
+* add missing type annotations ([31d52d3](https://github.com/derlin/mantelo/commit/31d52d39abc954c21d22e06f3483673161586405))
+* allow DELETE to have a body ([4cab8aa](https://github.com/derlin/mantelo/commit/4cab8aa1c0aa02d4442ae196ea9691de943f4bc8))
+* make HttpException handle responses with non-empty, non-JSON body ([33588c8](https://github.com/derlin/mantelo/commit/33588c8b1e3b4962706fc636fc791533b5e8a8ed))
+
+
+### 💬 Documentation
+
+* document "as_raw" to get the raw response ([33588c8](https://github.com/derlin/mantelo/commit/33588c8b1e3b4962706fc636fc791533b5e8a8ed))
+* document dashes and .url ([13852f1](https://github.com/derlin/mantelo/commit/13852f1c2d46d523a5f83574bb68cfd859504a6d))
+
 ## [2.1.1](https://github.com/derlin/mantelo/compare/v2.1.0...v2.1.1) (2024-11-16)
 
 
