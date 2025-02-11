@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/derlin/mantelo/compare/v2.2.0...v2.2.1) (2025-01-17)
+
+
+### 💬 Documentation
+
+* remove duplicated `Instead,` ([1f2e3c0](https://github.com/derlin/mantelo/commit/1f2e3c0eedb79087c7d7fb28e44b9481ef65479a))
+
 ## [2.2.0](https://github.com/derlin/mantelo/compare/v2.1.1...v2.2.0) (2024-12-29)
 
 **IMPORTANT**: This release removes the `slumber` dependency and integrates its functionality
