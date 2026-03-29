@@ -34,9 +34,9 @@ lint: ## Run ruff to format and lint (inside docker).
 	docker run --rm -e LINT_FOLDER_PYTHON=mantelo -v $(CURDIR):/app divio/lint /bin/lint ${ARGS} --run=python
 
 test: ## Run tests with tox (inside docker).
-	coverage erase
+	coverage erase || true
 	docker compose up -d --wait keycloak
-	docker compose run --rm tox ${ARGS}
+	docker compose run tox bash -c "git config --system --add safe.directory /app && tox ${ARGS}"
 	coverage combine
 	coverage html
 	coverage xml
