@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.2.1](https://github.com/derlin/mantelo/compare/v2.2.0...v2.2.1) (2026-04-13)
+
+
+### 🐛 Bug Fixes
+
+* raise proper exception on invalid credentials on keycloak 26.6 ([1fce16a](https://github.com/derlin/mantelo/commit/1fce16ab47ce47f7f99bc9ca6460b5ae436caf21))
+
+
+### 💬 Documentation
+
+* remove duplicated `Instead,` ([1f2e3c0](https://github.com/derlin/mantelo/commit/1f2e3c0eedb79087c7d7fb28e44b9481ef65479a))
+
 ## [2.2.0](https://github.com/derlin/mantelo/compare/v2.1.1...v2.2.0) (2024-12-29)
 
 **IMPORTANT**: This release removes the `slumber` dependency and integrates its functionality
