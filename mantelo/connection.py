@@ -214,6 +214,15 @@ class OpenidConnection(Connection, ABC):
         resp = self.session.post(self.auth_url, data=data, auth=_NO_AUTH)
         if resp.status_code == 401:
             raise AuthenticationException(**resp.json(), response=resp)
+        if resp.status_code == 400:
+            # In Keycloak 26.6.0, invalid credentials returns 400
+            error = resp.json()
+            if (
+                error.get("error_description", "")
+                == "Invalid user credentials"
+            ):
+                raise AuthenticationException(**error, response=resp)
+
         resp.raise_for_status()
         self._token = Token.from_dict(resp.json(), now=now)
         _logger.debug(
