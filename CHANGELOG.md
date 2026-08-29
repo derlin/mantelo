@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/derlin/mantelo/compare/v2.2.1...v2.2.2) (2026-08-29)
+
+
+### 🦀 Build and CI
+
+* update actions to latest ([764f83b](https://github.com/derlin/mantelo/commit/764f83be18aa37c249b7a15b30738fcf6e1966d8))
+
 ## [2.2.1](https://github.com/derlin/mantelo/compare/v2.2.0...v2.2.1) (2026-04-13)
 
 
