@@ -8,4 +8,4 @@ from .client import KeycloakAdmin
 from .exceptions import AuthenticationException, HttpException
 
 
-__all__ = ["KeycloakAdmin", "AuthenticationException", "HttpException"]
+__all__ = ["AuthenticationException", "HttpException", "KeycloakAdmin"]

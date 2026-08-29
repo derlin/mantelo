@@ -116,11 +116,8 @@ class Token:
 
         :return: True if a refresh token exists and is still valid.
         """
-        if (exp := self.refresh_expires_at) and _now() < (
-            exp - timedelta(seconds=2)
-        ):
-            return True
-        return False
+        exp = self.refresh_expires_at
+        return bool(exp and _now() < (exp - timedelta(seconds=2)))
 
     @classmethod
     def from_dict(cls, data: dict, now: datetime | None = None) -> "Token":

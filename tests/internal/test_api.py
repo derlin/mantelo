@@ -3,8 +3,8 @@ from unittest.mock import MagicMock, Mock, PropertyMock
 import pytest
 import requests
 
-from mantelo.internal import api as _api
 from mantelo import exceptions
+from mantelo.internal import api as _api
 from mantelo.internal.serializers import JsonSerializer
 
 

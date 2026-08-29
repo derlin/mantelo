@@ -47,6 +47,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "build",
+  "ruff",
   "coverage",
   "tox",
   "mypy",
@@ -98,13 +99,60 @@ write_to = "mantelo/version.py"
 
 
 [tool.ruff]
-extend = "/presets/ruff.toml"
-target-version = "py310"      # lowest supported version
+line-length = 79
+target-version = "py310" # lowest supported version
 
 [tool.ruff.lint]
-extend-ignore = [
-  "S101",  # allow asserts
+# S101 (assert used) is deliberately not selected: we allow asserts.
+select = [
+  "F",    # Pyflakes
+  "E",    # pycodestyle errors
+  "W",    # pycodestyle warnings
+  "I",    # isort
+  "UP",   # pyupgrade
+  "YTT",  # flake8-2020 (usage of sys package)
+  "S110", # try-except-pass detected, consider logging the exception
+  "B",    # flake8-bugbear
+  "C4",   # flake8-comprehensions
+  "T10",  # flake8-debugger
+  "EXE",  # flake8-executable
+  "FA",   # flake8-future-annotations
+  "ISC",  # flake8-implicit-str-concat
+  "PIE",  # flake8-pie (misc lints)
+  "T20",  # flake8-print
+  "PT",   # flake8-pytest-style
+  "RSE",  # flake8-raise
+  "RET",  # flake8-return
+  "SIM",  # flake8-simplify
+  "DTZ",  # flake8-datetimez (token expiry relies on aware datetimes)
+  "LOG",  # flake8-logging
+  "G",    # flake8-logging-format
+  "PERF", # perflint
+  "PLE",  # pylint ("E" subset)
+  "PLW",  # pylint ("W" subset)
+  "FLY",  # static join to f-string
+  "RUF",  # ruff miscellaneous lints
 ]
+
+ignore = [
+  "E501",    # line too long (the formatter owns line length)
+  "B904",    # raise-without-from-inside-except
+  "RET505",  # superfluous else return
+  "PLW2901", # redefined loop name
+  "RUF012",  # mutable class default
+  # Tests assert on the exception message via `excinfo.value`, which is
+  # stricter than `match=`, so requiring `match=` would be a step back.
+  "PT011",   # pytest.raises too broad
+
+  # conflicts with the ruff formatter
+  "W191",
+  "ISC001",
+  "ISC002",
+]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2
+lines-between-types = 0
 
 
 [tool.coverage.report]

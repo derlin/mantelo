@@ -1,4 +1,4 @@
-.PHONY: all help build docs lint test mypy export-realms
+.PHONY: all help build docs lint format test mypy export-realms
 
 default: help
 
@@ -30,8 +30,13 @@ docs-test: ## Test the documentation code snippets.
 
 ##@ Development
 
-lint: ## Run ruff to format and lint (inside docker).
-	docker run --rm -e LINT_FOLDER_PYTHON=mantelo -v $(CURDIR):/app divio/lint /bin/lint ${ARGS} --run=python
+lint: ## Check formatting and lint with ruff.
+	ruff format --check mantelo tests
+	ruff check mantelo tests
+
+format: ## Format and auto-fix with ruff.
+	ruff format mantelo tests
+	ruff check --fix --show-fixes mantelo tests
 
 test: ## Run tests with tox (inside docker).
 	coverage erase || true

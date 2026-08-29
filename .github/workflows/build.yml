@@ -22,7 +22,7 @@ jobs:
         run: sudo apt update && sudo apt -y --no-install-recommends install make
 
       - name: Lint
-        run: make lint ARGS=--check
+        run: make lint
 
       - name: Check manifest
         run: check-manifest

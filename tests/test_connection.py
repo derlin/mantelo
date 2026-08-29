@@ -1,14 +1,15 @@
-import pytest
+from datetime import datetime, timedelta, timezone
 
+import pytest
+import requests
 from attrs import evolve
+
 from mantelo.connection import (
-    Token,
     AuthenticationException,
     ClientCredentialsConnection,
+    Token,
     UsernamePasswordConnection,
 )
-from datetime import datetime, timedelta, timezone
-import requests
 
 
 def test_token_from_dict():
@@ -35,7 +36,7 @@ def test_token_from_dict():
 
 
 def test_refresh_without_expire():
-    with pytest.raises(TypeError, match="Missing refresh_expires_in."):
+    with pytest.raises(TypeError, match=r"Missing refresh_expires_in\."):
         Token(
             access_token="<any>",
             expires_in=123,
@@ -145,12 +146,12 @@ def test_ClientCredentialsconnection_init():
 
 
 def test_openidconnection_default_values():
-    args = dict(
-        server_url="https://kc.test",
-        realm_name="test",
-        client_id="foo-client",
-        client_secret="s3cr3t",
-    )
+    args = {
+        "server_url": "https://kc.test",
+        "realm_name": "test",
+        "client_id": "foo-client",
+        "client_secret": "s3cr3t",
+    }
 
     # Defaults
     conn = ClientCredentialsConnection(**args)

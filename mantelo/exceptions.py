@@ -1,3 +1,5 @@
+import contextlib
+
 import requests
 from attrs import field, frozen
 
@@ -41,11 +43,9 @@ class HttpException(ManteloException):
     @classmethod
     def from_response(cls, response: requests.Response) -> "HttpException":
         json = {}
-        try:
-            # Most API use JSON, but not all!
+        # Most API use JSON, but not all!
+        with contextlib.suppress(Exception):
             json = response.json()
-        except Exception:  # noqa: S110
-            pass
 
         return cls(
             url=response.request.url or "",

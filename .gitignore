@@ -12,3 +12,4 @@ mantelo/version.py
 __pycache__
 
 docs/_build
+.ruff_cache/

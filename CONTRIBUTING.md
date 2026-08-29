@@ -54,7 +54,8 @@ Documentation
   docs-open  Open the documentation locally (requires make docs to have ran).
 
 Development
-  lint   Run ruff to format and lint (inside docker).
+  lint   Check formatting and lint with ruff.
+  format  Format and auto-fix with ruff.
   test   Run tests with tox (inside docker).
   mypy   Run mypy locally to check types.
   export-realms  Export test realms after changes in Keycloak Test Server.
