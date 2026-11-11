@@ -15,6 +15,8 @@ To get started, install the package:
 
     pip install mantelo
 
+CI tests mantelo against Keycloak 26.0 and the latest release. Older versions may work, but are not tested.
+
 Now, assuming you have a Keycloak Server running, what's left is to:
 
 1. authenticate to Keycloak, :ref:`authentication`
