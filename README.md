@@ -159,7 +159,8 @@ client = KeycloakAdmin.from_username_password(
 > - to have "Client authentication" enabled,
 > - to support the `Service accounts roles` authentication flow,
 > 
-> - to have one or more service account roles granting access to Admin endpoints.
+> - to have one or more service account roles granting access to Admin endpoints,
+> - since Keycloak 26.8.2, to have the `kc-admin-api` client scope as a default scope.
 > 
 > Go to your client's "Credentials" tab to find the client secret.
 
