@@ -1,6 +1,6 @@
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:${KEYCLOAK_VERSION:-latest}
     command: start-dev --import-realm
     ports:
       - 9090:8080

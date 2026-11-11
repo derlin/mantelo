@@ -8,7 +8,15 @@ on:
 
 jobs:
   build:
+    name: build (keycloak ${{ matrix.keycloak }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Oldest supported version and latest
+        keycloak: ["26.0", "latest"]
+    env:
+      KEYCLOAK_VERSION: ${{ matrix.keycloak }}
     steps:
       - uses: actions/checkout@v7
 
