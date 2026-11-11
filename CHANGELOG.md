@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.2.2](https://github.com/derlin/mantelo/compare/v2.2.1...v2.2.2) (2026-11-11)
+
+
+### 🐛 Bug Fixes
+
+* grant kc-admin-api scope to test client for keycloak 26.8.2 ([458eee9](https://github.com/derlin/mantelo/commit/458eee9f2ce9a4969adf2be1aa1aea8ba0349caa))
+
+
+### 💬 Documentation
+
+* state tested keycloak versions ([a0a07bc](https://github.com/derlin/mantelo/commit/a0a07bc97ea7a5092d69429fdddf1e0f30ddd663))
+
+
+### 🦀 Build and CI
+
+* keep a stable build check for branch protection ([94d655b](https://github.com/derlin/mantelo/commit/94d655b852bf28ac44d56a1730630f954a5d4ee4))
+* test against oldest supported and latest keycloak ([55bf108](https://github.com/derlin/mantelo/commit/55bf108a0d7f096748b0a0a2bb9114dde23c0f35))
+* update actions to latest ([764f83b](https://github.com/derlin/mantelo/commit/764f83be18aa37c249b7a15b30738fcf6e1966d8))
+
 ## [2.2.1](https://github.com/derlin/mantelo/compare/v2.2.0...v2.2.1) (2026-04-13)
 
 
