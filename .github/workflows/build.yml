@@ -3,8 +3,8 @@ name: Build & Test
 on: [push, pull_request]
 
 jobs:
-  build:
-    name: build (keycloak ${{ matrix.keycloak }})
+  test:
+    name: test (keycloak ${{ matrix.keycloak }})
     runs-on: ubuntu-latest
     # Avoid duplicate runs
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository)
@@ -83,3 +83,12 @@ jobs:
             dist/*.*
             docs/_build/html
             docs/_build/doctest
+
+  # Branch protection requires a "build" check. A skipped matrix job reports
+  # an unexpanded name, so this job reports one stable result instead.
+  build:
+    needs: test
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: '[[ "${{ needs.test.result }}" =~ ^(success|skipped)$ ]]'
